@@ -7,10 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		187EA6BD26A8F8C000E648B8 /* MNCloudLiveCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6BB26A8F8C000E648B8 /* MNCloudLiveCardCell.swift */; };
+		187EA6BE26A8F8C000E648B8 /* MNCloudLiveCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187EA6BC26A8F8C000E648B8 /* MNCloudLiveCardCell.xib */; };
+		187EA6C326A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */; };
+		187EA6C626A966F800E648B8 /* SingleImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */; };
+		187EA6C726A966F800E648B8 /* SingleImageCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187EA6C526A966F800E648B8 /* SingleImageCollectionCell.xib */; };
+		187EA6CB26A96EC500E648B8 /* MNCloudController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C926A96EC500E648B8 /* MNCloudController.swift */; };
+		187EA6CC26A96EC500E648B8 /* MNCloudController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187EA6CA26A96EC500E648B8 /* MNCloudController.xib */; };
 		18A9B9A426A7CB3F006CBD5C /* MNCloudDeviceModular.h in Headers */ = {isa = PBXBuildFile; fileRef = 18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		187EA6BB26A8F8C000E648B8 /* MNCloudLiveCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCloudLiveCardCell.swift; sourceTree = "<group>"; };
+		187EA6BC26A8F8C000E648B8 /* MNCloudLiveCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MNCloudLiveCardCell.xib; sourceTree = "<group>"; };
+		187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCloudLiveCardCellCollectionPresenter.swift; sourceTree = "<group>"; };
+		187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageCollectionCell.swift; sourceTree = "<group>"; };
+		187EA6C526A966F800E648B8 /* SingleImageCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleImageCollectionCell.xib; sourceTree = "<group>"; };
+		187EA6C926A96EC500E648B8 /* MNCloudController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCloudController.swift; sourceTree = "<group>"; };
+		187EA6CA26A96EC500E648B8 /* MNCloudController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MNCloudController.xib; sourceTree = "<group>"; };
 		18A9B99F26A7CB3F006CBD5C /* MNCloudDeviceModular.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MNCloudDeviceModular.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNCloudDeviceModular.h; sourceTree = "<group>"; };
 		18A9B9A326A7CB3F006CBD5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -27,6 +41,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		187EA6C826A96E7A00E648B8 /* Colntrollers */ = {
+			isa = PBXGroup;
+			children = (
+				187EA6C926A96EC500E648B8 /* MNCloudController.swift */,
+				187EA6CA26A96EC500E648B8 /* MNCloudController.xib */,
+			);
+			path = Colntrollers;
+			sourceTree = "<group>";
+		};
 		18A9B99526A7CB3F006CBD5C = {
 			isa = PBXGroup;
 			children = (
@@ -46,7 +69,13 @@
 		18A9B9A126A7CB3F006CBD5C /* MNCloudDeviceModular */ = {
 			isa = PBXGroup;
 			children = (
+				187EA6C826A96E7A00E648B8 /* Colntrollers */,
 				18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */,
+				187EA6BB26A8F8C000E648B8 /* MNCloudLiveCardCell.swift */,
+				187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */,
+				187EA6BC26A8F8C000E648B8 /* MNCloudLiveCardCell.xib */,
+				187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */,
+				187EA6C526A966F800E648B8 /* SingleImageCollectionCell.xib */,
 				18A9B9A326A7CB3F006CBD5C /* Info.plist */,
 			);
 			path = MNCloudDeviceModular;
@@ -90,10 +119,12 @@
 		18A9B99626A7CB3F006CBD5C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					18A9B99E26A7CB3F006CBD5C = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -120,6 +151,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				187EA6BE26A8F8C000E648B8 /* MNCloudLiveCardCell.xib in Resources */,
+				187EA6C726A966F800E648B8 /* SingleImageCollectionCell.xib in Resources */,
+				187EA6CC26A96EC500E648B8 /* MNCloudController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +164,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				187EA6CB26A96EC500E648B8 /* MNCloudController.swift in Sources */,
+				187EA6BD26A8F8C000E648B8 /* MNCloudLiveCardCell.swift in Sources */,
+				187EA6C326A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift in Sources */,
+				187EA6C626A966F800E648B8 /* SingleImageCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,7 +226,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -246,7 +284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -261,21 +299,33 @@
 		18A9B9A826A7CB3F006CBD5C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MNCloudDeviceModular/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = staticlib;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wyz.MNCloudDeviceModular;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -284,21 +334,33 @@
 		18A9B9A926A7CB3F006CBD5C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = MNCloudDeviceModular/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = staticlib;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wyz.MNCloudDeviceModular;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
