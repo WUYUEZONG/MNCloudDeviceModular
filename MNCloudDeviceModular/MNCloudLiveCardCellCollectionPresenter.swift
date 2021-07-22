@@ -11,7 +11,7 @@ class MNCloudLiveCardCellCollectionPresenter: NSObject {
     
     
     private var cell: MNCloudLiveCardCell!
-    private lazy var collection: UICollectionView = {
+    lazy var collection: UICollectionView = {
         let l = UICollectionViewFlowLayout()
         l.itemSize = CGSize(width: 120, height: 80)
         l.scrollDirection = .horizontal
@@ -19,17 +19,16 @@ class MNCloudLiveCardCellCollectionPresenter: NSObject {
         let c = UICollectionView(frame: .zero, collectionViewLayout: l)
         c.dataSource = self
         c.delegate = self
-        c.register(UINib(nibName: "SingleImageCollectionCell", bundle: nil), forCellWithReuseIdentifier: "SingleImageCollectionCell")
+        c.register(SingleImageCollectionCell.self, forCellWithReuseIdentifier: "SingleImageCollectionCell")
         cell.contentView.addSubview(c)
         c.translatesAutoresizingMaskIntoConstraints = false
         let h = c.heightAnchor.constraint(equalToConstant: 80)
-        let leading = c.leadingAnchor.constraint(equalTo: cell.leadingAnchor)
-        let t = c.trailingAnchor.constraint(equalTo: cell.trailingAnchor)
-        let b = c.bottomAnchor.constraint(equalTo: cell.bottomAnchor)
+        let leading = c.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor)
+        let trailing = c.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor)
+        cell.cb = c.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
         let top = c.topAnchor.constraint(equalTo: cell.bottomStack.bottomAnchor)
-        NSLayoutConstraint.activate([top, h, leading, t, b])
-        b.isActive = false
-        b.identifier = "collectionBottomToCellBottom"
+        NSLayoutConstraint.activate([top, h, leading, trailing])
+
         c.isHidden = true
         return c
     }()
@@ -47,7 +46,8 @@ extension MNCloudLiveCardCellCollectionPresenter: UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCollectionCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCollectionCell", for: indexPath) as! SingleImageCollectionCell
+        cell.backgroundImage.image = UIImage(named: "MNCloudDeviceModular.framework/holder")
         return cell
     }
     

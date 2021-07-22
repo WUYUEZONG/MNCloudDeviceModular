@@ -7,27 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		187EA6BD26A8F8C000E648B8 /* MNCloudLiveCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6BB26A8F8C000E648B8 /* MNCloudLiveCardCell.swift */; };
-		187EA6BE26A8F8C000E648B8 /* MNCloudLiveCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187EA6BC26A8F8C000E648B8 /* MNCloudLiveCardCell.xib */; };
 		187EA6C326A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */; };
 		187EA6C626A966F800E648B8 /* SingleImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */; };
-		187EA6C726A966F800E648B8 /* SingleImageCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187EA6C526A966F800E648B8 /* SingleImageCollectionCell.xib */; };
 		187EA6CB26A96EC500E648B8 /* MNCloudController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C926A96EC500E648B8 /* MNCloudController.swift */; };
-		187EA6CC26A96EC500E648B8 /* MNCloudController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187EA6CA26A96EC500E648B8 /* MNCloudController.xib */; };
 		18A9B9A426A7CB3F006CBD5C /* MNCloudDeviceModular.h in Headers */ = {isa = PBXBuildFile; fileRef = 18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		619994F426A9B8A700D94110 /* holder.png in Resources */ = {isa = PBXBuildFile; fileRef = 619994F326A9B8A700D94110 /* holder.png */; };
+		619994F626A9C6C000D94110 /* MNCloudLiveCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619994F526A9C6C000D94110 /* MNCloudLiveCardCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		187EA6BB26A8F8C000E648B8 /* MNCloudLiveCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCloudLiveCardCell.swift; sourceTree = "<group>"; };
-		187EA6BC26A8F8C000E648B8 /* MNCloudLiveCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MNCloudLiveCardCell.xib; sourceTree = "<group>"; };
 		187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCloudLiveCardCellCollectionPresenter.swift; sourceTree = "<group>"; };
 		187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageCollectionCell.swift; sourceTree = "<group>"; };
-		187EA6C526A966F800E648B8 /* SingleImageCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleImageCollectionCell.xib; sourceTree = "<group>"; };
 		187EA6C926A96EC500E648B8 /* MNCloudController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCloudController.swift; sourceTree = "<group>"; };
-		187EA6CA26A96EC500E648B8 /* MNCloudController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MNCloudController.xib; sourceTree = "<group>"; };
 		18A9B99F26A7CB3F006CBD5C /* MNCloudDeviceModular.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MNCloudDeviceModular.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNCloudDeviceModular.h; sourceTree = "<group>"; };
 		18A9B9A326A7CB3F006CBD5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		619994A126A98D1500D94110 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		619994F326A9B8A700D94110 /* holder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = holder.png; sourceTree = "<group>"; };
+		619994F526A9C6C000D94110 /* MNCloudLiveCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNCloudLiveCardCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,19 +38,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		187EA6C826A96E7A00E648B8 /* Colntrollers */ = {
-			isa = PBXGroup;
-			children = (
-				187EA6C926A96EC500E648B8 /* MNCloudController.swift */,
-				187EA6CA26A96EC500E648B8 /* MNCloudController.xib */,
-			);
-			path = Colntrollers;
-			sourceTree = "<group>";
-		};
 		18A9B99526A7CB3F006CBD5C = {
 			isa = PBXGroup;
 			children = (
 				18A9B9A126A7CB3F006CBD5C /* MNCloudDeviceModular */,
+				619994A026A98D1500D94110 /* MNCloudDeviceModularBundle */,
 				18A9B9A026A7CB3F006CBD5C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,16 +58,23 @@
 		18A9B9A126A7CB3F006CBD5C /* MNCloudDeviceModular */ = {
 			isa = PBXGroup;
 			children = (
-				187EA6C826A96E7A00E648B8 /* Colntrollers */,
+				619994F326A9B8A700D94110 /* holder.png */,
+				187EA6C926A96EC500E648B8 /* MNCloudController.swift */,
 				18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */,
-				187EA6BB26A8F8C000E648B8 /* MNCloudLiveCardCell.swift */,
 				187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */,
-				187EA6BC26A8F8C000E648B8 /* MNCloudLiveCardCell.xib */,
+				619994F526A9C6C000D94110 /* MNCloudLiveCardCell.swift */,
 				187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */,
-				187EA6C526A966F800E648B8 /* SingleImageCollectionCell.xib */,
 				18A9B9A326A7CB3F006CBD5C /* Info.plist */,
 			);
 			path = MNCloudDeviceModular;
+			sourceTree = "<group>";
+		};
+		619994A026A98D1500D94110 /* MNCloudDeviceModularBundle */ = {
+			isa = PBXGroup;
+			children = (
+				619994A126A98D1500D94110 /* Info.plist */,
+			);
+			path = MNCloudDeviceModularBundle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,9 +147,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				187EA6BE26A8F8C000E648B8 /* MNCloudLiveCardCell.xib in Resources */,
-				187EA6C726A966F800E648B8 /* SingleImageCollectionCell.xib in Resources */,
-				187EA6CC26A96EC500E648B8 /* MNCloudController.xib in Resources */,
+				619994F426A9B8A700D94110 /* holder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,8 +158,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				619994F626A9C6C000D94110 /* MNCloudLiveCardCell.swift in Sources */,
 				187EA6CB26A96EC500E648B8 /* MNCloudController.swift in Sources */,
-				187EA6BD26A8F8C000E648B8 /* MNCloudLiveCardCell.swift in Sources */,
 				187EA6C326A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift in Sources */,
 				187EA6C626A966F800E648B8 /* SingleImageCollectionCell.swift in Sources */,
 			);
