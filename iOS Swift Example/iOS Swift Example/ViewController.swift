@@ -10,17 +10,17 @@ import MNCloudDeviceModular
 
 class ViewController: UIViewController {
 
-    lazy var data: [TestModel] = {
+    lazy var data: [LiveCardModel] = {
         
-        return [TestModel(), TestModel(), TestModel(), TestModel(), TestModel(), TestModel(), TestModel(), TestModel(), TestModel(), TestModel()]
+        return [LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel()]
     }()
     
     @IBOutlet weak var collection: UICollectionView! {
         didSet {
             
             let l = UICollectionViewFlowLayout()
-            l.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-//            l.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 308)
+//            l.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            l.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 308)
             l.minimumLineSpacing = 16
             l.scrollDirection = .vertical
             collection.setCollectionViewLayout(l, animated: false)
@@ -49,9 +49,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MNCloudLiveCardCell", for: indexPath) as! MNCloudLiveCardCell
         cell.model = data[indexPath.row]
-//        cell.deviceLogo.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
+//        cell.deviceLogo.setImage(UIImage(named: "holder"), for: .normal)
 //        cell.networkStatus.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
-//        cell.screenShoot.image = UIImage(systemName: "logo.xbox")
+        cell.screenShoot.image = UIImage(named: "holder")
 //        cell.shareButton.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
 //        cell.alarmButton.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
 //        cell.cloudStoreButton.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
@@ -67,6 +67,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     
+    
+    
+}
+
+extension ViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return data[indexPath.row].liveCardSize
+    }
 }
 
 
@@ -85,7 +93,9 @@ extension ViewController: MNCloudLiveCardCellDelegate {
     
     func didTapAlarmButton(cell: MNCloudLiveCardCell) {
         if let i = collection.indexPath(for: cell) {
+            
             collection.reloadItems(at: [i])
+//            collection.reloadData()
         }
     }
     

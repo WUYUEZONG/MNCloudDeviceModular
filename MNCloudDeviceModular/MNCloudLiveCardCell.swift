@@ -7,10 +7,12 @@
 
 import UIKit
 
-public class TestModel: NSObject {
+public class LiveCardModel: NSObject {
     var isOpen = false
-    var bb: NSLayoutConstraint!
-    var cb: NSLayoutConstraint!
+    public var liveCardSize: CGSize {
+        let w = UIScreen.main.bounds.width
+        return isOpen ? CGSize(width: w, height: 388) : CGSize(width: w, height: 308)
+    }
 }
 
 public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
@@ -24,20 +26,13 @@ public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
 
 public class MNCloudLiveCardCell: UICollectionViewCell {
     
-    public var model = TestModel() {
+    public var model = LiveCardModel() {
         didSet {
-            if model.bb == nil {
-                model.bb = bb
-            }
-            if model.cb == nil {
-                model.cb = cb
-            }
-            model.bb.isActive = !model.isOpen
-            model.cb.isActive = model.isOpen
             collectionPresenter.collection.isHidden = !model.isOpen
             alarmButton.isSelected = model.isOpen
         }
     }
+    
     
     public weak var delegate: MNCloudLiveCardCellDelegate?
     
@@ -63,6 +58,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     public lazy var screenShoot: UIImageView = {
         let s = UIImageView()
         s.contentMode = .scaleAspectFill
+        s.clipsToBounds = true
         contentView.addSubview(s)
         s.translatesAutoresizingMaskIntoConstraints = false
         let leading = s.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
@@ -85,13 +81,10 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         let leading = b.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         let trailing = b.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         let top = b.topAnchor.constraint(equalTo: screenShoot.bottomAnchor)
-        bb = b.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        NSLayoutConstraint.activate([h, leading, trailing, top, bb])
+        NSLayoutConstraint.activate([h, leading, trailing, top])
         return b
     }()
     
-    var bb: NSLayoutConstraint!
-    var cb: NSLayoutConstraint!
     
     public lazy var deviceLogo: UIButton = {
         let d = UIButton(type: .system)
@@ -164,8 +157,8 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         contentView.backgroundColor = .gray
 //        let w = bottomStack.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
 //        NSLayoutConstraint.activate([w])
-        self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.deactivate(self.constraints)
+//        self.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.deactivate(self.constraints)
         
         let _ = bottomStack
         let _ = collectionPresenter

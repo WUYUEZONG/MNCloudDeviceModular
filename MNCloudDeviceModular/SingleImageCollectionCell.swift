@@ -9,25 +9,32 @@ import UIKit
 
 class SingleImageCollectionCell: UICollectionViewCell {
     
-    lazy var backgroundImage: UIImageView = {
+    public lazy var backgroundImage: UIImageView = {
         let bImg = UIImageView()
+        bImg.clipsToBounds = true
         bImg.contentMode = .scaleAspectFill
-        addSubview(bImg)
+        contentView.addSubview(bImg)
         bImg.translatesAutoresizingMaskIntoConstraints = false
-        let leading = bImg.leadingAnchor.constraint(equalTo: leadingAnchor)
-        let top = bImg.topAnchor.constraint(equalTo: topAnchor)
-        let trailing = bImg.trailingAnchor.constraint(equalTo: trailingAnchor)
-        let bottom = bImg.bottomAnchor.constraint(equalTo: bottomAnchor)
+        let leading = bImg.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+        let top = bImg.topAnchor.constraint(equalTo: contentView.topAnchor)
+        let trailing = bImg.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        let bottom = bImg.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        
+        NSLayoutConstraint.activate([leading, top, trailing, bottom]);
+        
         return bImg
     }()
-    lazy var recordingTime: UILabel = {
+    public lazy var recordingTime: UILabel = {
         let r = UILabel()
         r.font = .systemFont(ofSize: 12, weight: .medium)
         r.textAlignment = .right
-        addSubview(r)
+        contentView.addSubview(r)
         r.translatesAutoresizingMaskIntoConstraints = false
-        let trailing = r.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
-        let bottom = r.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+        let trailing = r.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
+        let bottom = r.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+        
+        NSLayoutConstraint.activate([trailing, bottom]);
+        
         return r
     }()
     

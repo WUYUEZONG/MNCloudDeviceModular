@@ -13,9 +13,6 @@
 		18A9B9F026A7D758006CBD5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18A9B9EE26A7D758006CBD5C /* Main.storyboard */; };
 		18A9B9F226A7D75B006CBD5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18A9B9F126A7D75B006CBD5C /* Assets.xcassets */; };
 		18A9B9F526A7D75B006CBD5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18A9B9F326A7D75B006CBD5C /* LaunchScreen.storyboard */; };
-		619994EF26A9AA3300D94110 /* SingleImageCollectionCell.nib in Resources */ = {isa = PBXBuildFile; fileRef = 619994EC26A9AA3300D94110 /* SingleImageCollectionCell.nib */; };
-		619994F026A9AA3300D94110 /* MNCloudLiveCardCell.nib in Resources */ = {isa = PBXBuildFile; fileRef = 619994ED26A9AA3300D94110 /* MNCloudLiveCardCell.nib */; };
-		619994F126A9AA3300D94110 /* MNCloudController.nib in Resources */ = {isa = PBXBuildFile; fileRef = 619994EE26A9AA3300D94110 /* MNCloudController.nib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,13 +22,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 18A9B99F26A7CB3F006CBD5C;
 			remoteInfo = MNCloudDeviceModular;
-		};
-		619994A926A98E0600D94110 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 187EA6B126A8F67800E648B8 /* MNCloudDeviceModular.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6199949F26A98D1500D94110;
-			remoteInfo = MNCloudDeviceModularBundle;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -45,9 +35,6 @@
 		18A9B9F126A7D75B006CBD5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18A9B9F426A7D75B006CBD5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18A9B9F626A7D75B006CBD5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		619994EC26A9AA3300D94110 /* SingleImageCollectionCell.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = SingleImageCollectionCell.nib; sourceTree = "<group>"; };
-		619994ED26A9AA3300D94110 /* MNCloudLiveCardCell.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MNCloudLiveCardCell.nib; sourceTree = "<group>"; };
-		619994EE26A9AA3300D94110 /* MNCloudController.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MNCloudController.nib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +52,6 @@
 			isa = PBXGroup;
 			children = (
 				187EA6B626A8F67800E648B8 /* MNCloudDeviceModular.framework */,
-				619994AA26A98E0600D94110 /* MNCloudDeviceModularBundle.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,7 +84,6 @@
 		18A9B9E726A7D758006CBD5C /* iOS Swift Example */ = {
 			isa = PBXGroup;
 			children = (
-				619994EB26A9AA3300D94110 /* xibs */,
 				18A9B9E826A7D758006CBD5C /* AppDelegate.swift */,
 				18A9B9EA26A7D758006CBD5C /* SceneDelegate.swift */,
 				18A9B9EC26A7D758006CBD5C /* ViewController.swift */,
@@ -108,16 +93,6 @@
 				18A9B9F626A7D75B006CBD5C /* Info.plist */,
 			);
 			path = "iOS Swift Example";
-			sourceTree = "<group>";
-		};
-		619994EB26A9AA3300D94110 /* xibs */ = {
-			isa = PBXGroup;
-			children = (
-				619994EC26A9AA3300D94110 /* SingleImageCollectionCell.nib */,
-				619994ED26A9AA3300D94110 /* MNCloudLiveCardCell.nib */,
-				619994EE26A9AA3300D94110 /* MNCloudController.nib */,
-			);
-			path = xibs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,13 +161,6 @@
 			remoteRef = 187EA6B526A8F67800E648B8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		619994AA26A98E0600D94110 /* MNCloudDeviceModularBundle.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MNCloudDeviceModularBundle.bundle;
-			remoteRef = 619994A926A98E0600D94110 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -201,9 +169,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				18A9B9F526A7D75B006CBD5C /* LaunchScreen.storyboard in Resources */,
-				619994F026A9AA3300D94110 /* MNCloudLiveCardCell.nib in Resources */,
-				619994F126A9AA3300D94110 /* MNCloudController.nib in Resources */,
-				619994EF26A9AA3300D94110 /* SingleImageCollectionCell.nib in Resources */,
 				18A9B9F226A7D75B006CBD5C /* Assets.xcassets in Resources */,
 				18A9B9F026A7D758006CBD5C /* Main.storyboard in Resources */,
 			);
