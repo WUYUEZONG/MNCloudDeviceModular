@@ -47,7 +47,7 @@ extension MNCloudLiveCardCellCollectionPresenter: UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCollectionCell", for: indexPath) as! SingleImageCollectionCell
-        cell.backgroundImage.image = UIImage(named: "holder")
+        cell.backgroundImage.image = UIImage(named: "1")
         return cell
     }
     

@@ -13,6 +13,14 @@ public class LiveCardModel: NSObject {
         let w = UIScreen.main.bounds.width
         return isOpen ? CGSize(width: w, height: 388) : CGSize(width: w, height: 308)
     }
+    var imageName = "1"
+    var deviceLogoImageName = "sun"
+    var wifiImageName = "wifi"
+    
+    public convenience init(imageName: String) {
+        self.init()
+        self.imageName = imageName
+    }
 }
 
 public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
@@ -30,6 +38,9 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         didSet {
             collectionPresenter.collection.isHidden = !model.isOpen
             alarmButton.isSelected = model.isOpen
+            screenShoot.image = UIImage(named: model.imageName)
+            deviceLogo.setImage(UIImage(named: model.deviceLogoImageName), for: .normal)
+            networkStatus.setImage(UIImage(named: model.wifiImageName), for: .normal)
         }
     }
     
@@ -37,19 +48,13 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     public weak var delegate: MNCloudLiveCardCellDelegate?
     
     public lazy var topStack: UIStackView = {
-        deviceLogo.setContentHuggingPriority(UILayoutPriority(700), for: .horizontal)
-        deviceLogo.setContentCompressionResistancePriority(UILayoutPriority(700), for: .horizontal)
-        deviceName.setContentHuggingPriority(UILayoutPriority(600), for: .horizontal)
-        deviceName.setContentCompressionResistancePriority(UILayoutPriority(600), for: .horizontal)
-        networkStatus.setContentHuggingPriority(UILayoutPriority(650), for: .horizontal)
-        networkStatus.setContentCompressionResistancePriority(UILayoutPriority(650), for: .horizontal)
         let t = UIStackView(arrangedSubviews: [deviceLogo, deviceName, networkStatus])
         t.axis = .horizontal
         contentView.addSubview(t)
         t.translatesAutoresizingMaskIntoConstraints = false
         let leading = t.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10)
         let top = t.topAnchor.constraint(equalTo: contentView.topAnchor)
-        let trailing = t.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 10)
+        let trailing = t.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         let h = t.heightAnchor.constraint(equalToConstant: 48)
         NSLayoutConstraint.activate([leading, top, trailing, h])
         return t
@@ -87,52 +92,77 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     
     public lazy var deviceLogo: UIButton = {
-        let d = UIButton(type: .system)
-        d.setTitle("0000", for: .normal)
-        d.setImage(UIImage(named: "MNCloudDeviceModular.framework/holder"), for: .normal)
+        let d = UIButton(type: .custom)
+        d.imageView?.contentMode = .scaleAspectFit
+        d.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        d.translatesAutoresizingMaskIntoConstraints = false
+        let width = d.widthAnchor.constraint(equalToConstant: 36)
+        NSLayoutConstraint.activate([width])
         return d
     }()
     public lazy var deviceName: UIButton = {
         let d = UIButton(type: .system)
         d.titleLabel?.font = .systemFont(ofSize: 18)
+        d.titleLabel?.textAlignment = .left
+        d.tintColor = .black
+        d.contentHorizontalAlignment = .left
         d.setTitle("DeviceName", for: .normal)
         return d
     }()
     public lazy var networkStatus: UIButton = {
-        let n = UIButton(type: .system)
-        n.setImage(UIImage(named: "MNCloudDeviceModular.framework/holder"), for: .normal)
+        let n = UIButton(type: .custom)
+        n.imageView?.contentMode = .scaleAspectFit
+        n.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        n.translatesAutoresizingMaskIntoConstraints = false
+        let width = n.widthAnchor.constraint(equalToConstant: 36)
+        NSLayoutConstraint.activate([width])
         return n
     }()
     
     public lazy var shareButton: UIButton = {
-        let s = UIButton(type: .system)
-        s.titleLabel?.font = .systemFont(ofSize: 18)
-        s.setTitle("1111", for: .normal)
+        let s = UIButton(type: .custom)
+        s.titleLabel?.font = .systemFont(ofSize: 12)
+        s.setTitleColor(.black, for: .normal)
+        s.setImage(UIImage(named: "sun"), for: .normal)
+        s.setTitle("Share", for: .normal)
         s.addTarget(self, action: #selector(shareButtonAction), for: .touchUpInside)
         return s
     }()
     public lazy var alarmButton: UIButton = {
         let a = UIButton(type: .system)
-        a.titleLabel?.font = .systemFont(ofSize: 18)
-        a.setTitle("2222", for: .normal)
+        a.titleLabel?.font = .systemFont(ofSize: 12)
+        a.setTitle("Message", for: .normal)
         a.addTarget(self, action: #selector(alarmButtonAction(sender:)), for: .touchUpInside)
         return a
     }()
     public lazy var cloudStoreButton: UIButton = {
         let c = UIButton(type: .system)
-        c.titleLabel?.font = .systemFont(ofSize: 18)
-        c.setTitle("333", for: .normal)
+        c.titleLabel?.font = .systemFont(ofSize: 12)
+        c.setTitle("Cloud", for: .normal)
         c.addTarget(self, action: #selector(cloudStoreButtonAction), for: .touchUpInside)
         return c
     }()
     public lazy var settingButton: UIButton = {
         let s = UIButton(type: .custom)
-        s.titleLabel?.font = .systemFont(ofSize: 18)
-        s.setTitle("4444", for: .normal)
+        s.titleLabel?.font = .systemFont(ofSize: 12)
+        s.setTitle("Settings", for: .normal)
         s.addTarget(self, action: #selector(settingsButtonAction), for: .touchUpInside)
         return s
     }()
     
+    
+    func setButtonPosition(btn: UIButton) {
+        guard let imageView = btn.imageView, let titleLabel = btn.titleLabel else {
+            return
+        }
+        
+        btn.imageEdgeInsets.bottom += titleLabel.frame.height / 2
+        btn.titleEdgeInsets.top += imageView.frame.height / 2
+        
+        btn.imageEdgeInsets.left += (btn.frame.width / 2 - imageView.frame.minX - imageView.frame.width / 2)
+        btn.titleEdgeInsets.right += (btn.frame.width / 2 - btn.frame.width + titleLabel.frame.maxX  - titleLabel.frame.width)
+        
+    }
     
     
     
@@ -154,15 +184,15 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }
     
     func initUI() {
-        contentView.backgroundColor = .gray
-//        let w = bottomStack.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-//        NSLayoutConstraint.activate([w])
-//        self.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.deactivate(self.constraints)
-        
+        contentView.backgroundColor = .lightGray
         let _ = bottomStack
         let _ = collectionPresenter
         
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        setButtonPosition(btn: shareButton)
     }
     
     

@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        view.backgroundColor = .systemBackground
     }
 
 
@@ -49,15 +49,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MNCloudLiveCardCell", for: indexPath) as! MNCloudLiveCardCell
         cell.model = data[indexPath.row]
-//        cell.deviceLogo.setImage(UIImage(named: "holder"), for: .normal)
-//        cell.networkStatus.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
-        cell.screenShoot.image = UIImage(named: "holder")
-//        cell.shareButton.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
-//        cell.alarmButton.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
-//        cell.cloudStoreButton.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
-//        cell.settingButton.setImage(UIImage(systemName: "logo.xbox"), for: .normal)
         cell.delegate = self
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
     }
     
     
