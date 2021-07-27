@@ -31,6 +31,8 @@ class MNCloudLiveCardCellCollectionPresenter: NSObject {
 
         c.isHidden = true
         return c
+        
+        
     }()
     
     init(_ cell: MNCloudLiveCardCell) {
