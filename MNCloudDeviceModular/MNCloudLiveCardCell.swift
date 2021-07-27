@@ -180,6 +180,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
+        
         setButtonPosition(btn: shareButton)
         setButtonPosition(btn: alarmButton)
         setButtonPosition(btn: cloudStoreButton)
