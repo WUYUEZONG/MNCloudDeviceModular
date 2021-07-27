@@ -8,19 +8,23 @@
 import UIKit
 
 public class LiveCardModel: NSObject {
+    
+    var indexPath: IndexPath?
     var isOpen = false
+    
     public var liveCardSize: CGSize {
         let w = UIScreen.main.bounds.width
         return isOpen ? CGSize(width: w, height: 388) : CGSize(width: w, height: 308)
     }
+    
     var imageName = "1"
     var deviceLogoImageName = "sun"
     var wifiImageName = "wifi"
     
-    public convenience init(imageName: String) {
-        self.init()
-        self.imageName = imageName
+    func reload() {
+        
     }
+    
 }
 
 public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
@@ -120,57 +124,41 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }()
     
     public lazy var shareButton: UIButton = {
-        let s = UIButton(type: .custom)
-        s.titleLabel?.font = .systemFont(ofSize: 12)
-        s.setTitleColor(.black, for: .normal)
-        s.setImage(UIImage(named: "sun"), for: .normal)
-        s.setTitle("Share", for: .normal)
-        s.addTarget(self, action: #selector(shareButtonAction), for: .touchUpInside)
-        return s
+        return defaultFootButton(with: "Share", action: #selector(shareButtonAction))
     }()
     public lazy var alarmButton: UIButton = {
-        let a = UIButton(type: .system)
-        a.titleLabel?.font = .systemFont(ofSize: 12)
-        a.setTitle("Message", for: .normal)
-        a.addTarget(self, action: #selector(alarmButtonAction(sender:)), for: .touchUpInside)
-        return a
+        return defaultFootButton(with: "Message", action: #selector(alarmButtonAction(sender:)))
     }()
     public lazy var cloudStoreButton: UIButton = {
-        let c = UIButton(type: .system)
-        c.titleLabel?.font = .systemFont(ofSize: 12)
-        c.setTitle("Cloud", for: .normal)
-        c.addTarget(self, action: #selector(cloudStoreButtonAction), for: .touchUpInside)
-        return c
+        return defaultFootButton(with: "Cloud", action: #selector(cloudStoreButtonAction))
     }()
     public lazy var settingButton: UIButton = {
-        let s = UIButton(type: .custom)
-        s.titleLabel?.font = .systemFont(ofSize: 12)
-        s.setTitle("Settings", for: .normal)
-        s.addTarget(self, action: #selector(settingsButtonAction), for: .touchUpInside)
-        return s
+        return defaultFootButton(with: "Settings", action: #selector(settingsButtonAction))
     }()
-    
-    
-    func setButtonPosition(btn: UIButton) {
-        guard let imageView = btn.imageView, let titleLabel = btn.titleLabel else {
-            return
-        }
-        
-        btn.imageEdgeInsets.bottom += titleLabel.frame.height / 2
-        btn.titleEdgeInsets.top += imageView.frame.height / 2
-        
-        btn.imageEdgeInsets.left += (btn.frame.width / 2 - imageView.frame.minX - imageView.frame.width / 2)
-        btn.titleEdgeInsets.right += (btn.frame.width / 2 - btn.frame.width + titleLabel.frame.maxX  - titleLabel.frame.width)
-        
-    }
-    
-    
     
     private lazy var collectionPresenter: MNCloudLiveCardCellCollectionPresenter = {
         let p = MNCloudLiveCardCellCollectionPresenter(self)
         let _ = p.collection
         return p
     }()
+    
+    private func defaultFootButton(with title: String, imageName: String = "sun", fontSize: CGFloat = 12, action: Selector) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = .systemFont(ofSize: fontSize)
+        button.setImage(UIImage(named: imageName), for: .normal)
+        button.setTitle(title, for: .normal)
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
+    }
+    
+    private func setButtonPosition(btn: UIButton) {
+        guard let imageView = btn.imageView, let titleLabel = btn.titleLabel else {
+            return
+        }
+        
+        btn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: titleLabel.frame.height, right: -titleLabel.frame.width)
+        btn.titleEdgeInsets = UIEdgeInsets(top: imageView.frame.height, left: -imageView.frame.width, bottom: 0, right: 0)
+    }
     
     
     public override init(frame: CGRect) {
@@ -193,6 +181,9 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     public override func layoutSubviews() {
         super.layoutSubviews()
         setButtonPosition(btn: shareButton)
+        setButtonPosition(btn: alarmButton)
+        setButtonPosition(btn: cloudStoreButton)
+        setButtonPosition(btn: settingButton)
     }
     
     
