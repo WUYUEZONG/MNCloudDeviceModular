@@ -10,19 +10,19 @@ import MNCloudDeviceModular
 
 class ViewController: UIViewController {
 
-    lazy var data: [LiveCardModel] = {
+    lazy var data: [LiveCellModel] = {
         
-        return [LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel(), LiveCardModel()]
+        return [LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true))]
     }()
     
     @IBOutlet weak var collection: UICollectionView! {
         didSet {
             
             let l = UICollectionViewFlowLayout()
-//            l.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-            l.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 308)
-            l.minimumLineSpacing = 16
+            l.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: 308)
+            l.minimumLineSpacing = 12
             l.scrollDirection = .vertical
+            collection.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
             collection.setCollectionViewLayout(l, animated: false)
             collection.register(MNCloudLiveCardCell.self, forCellWithReuseIdentifier: "MNCloudLiveCardCell")
             
@@ -48,8 +48,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MNCloudLiveCardCell", for: indexPath) as! MNCloudLiveCardCell
-        cell.model = data[indexPath.row]
         cell.delegate = self
+        cell.dataSource = data[indexPath.row]
         return cell
     }
     
@@ -59,8 +59,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let c = MNCloudController()
-//        showDetailViewController(c, sender: nil)
+
     }
     
     
@@ -70,39 +69,24 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return data[indexPath.row].liveCardSize
+        return data[indexPath.row].liveCardSize(width: UIScreen.main.bounds.width - 20)
     }
 }
 
 
 extension ViewController: MNCloudLiveCardCellDelegate {
-    func didTapDeviceName(cell: MNCloudLiveCardCell) {
-        
-    }
     
-    func didTapNetworkImage(cell: MNCloudLiveCardCell) {
-        
-    }
-    
-    func didTapShareButton(cell: MNCloudLiveCardCell) {
-        
-    }
-    
-    func didTapAlarmButton(cell: MNCloudLiveCardCell) {
-        if let i = collection.indexPath(for: cell) {
-            
-            collection.reloadItems(at: [i])
-//            collection.reloadData()
+    func didSelect(cell: MNCloudLiveCardCell, at item: LiveCardItem) {
+        switch item {
+        case .second:
+            if let i = collection.indexPath(for: cell) {
+                data[i.row].model.isOpen = !data[i.row].model.isOpen
+                collection.reloadItems(at: [i])
+            }
+        default:
+            debugPrint("\(item)")
         }
     }
     
-    func didTapCloudStoreButton(cell: MNCloudLiveCardCell) {
-        
-    }
-    
-    func didTapSettingButton(cell: MNCloudLiveCardCell) {
-        
-    }
-    
-    
 }
+

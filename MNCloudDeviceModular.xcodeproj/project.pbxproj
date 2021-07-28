@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		187617B326B10B0A001FE8AF /* MNLiveCardCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187617B226B10B0A001FE8AF /* MNLiveCardCellDataSource.swift */; };
 		187EA6C326A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */; };
 		187EA6C626A966F800E648B8 /* SingleImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */; };
 		187EA6CB26A96EC500E648B8 /* MNCloudController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C926A96EC500E648B8 /* MNCloudController.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		187617B226B10B0A001FE8AF /* MNLiveCardCellDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNLiveCardCellDataSource.swift; sourceTree = "<group>"; };
 		187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCloudLiveCardCellCollectionPresenter.swift; sourceTree = "<group>"; };
 		187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageCollectionCell.swift; sourceTree = "<group>"; };
 		187EA6C926A96EC500E648B8 /* MNCloudController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCloudController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */,
 				187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */,
 				619994F526A9C6C000D94110 /* MNCloudLiveCardCell.swift */,
+				187617B226B10B0A001FE8AF /* MNLiveCardCellDataSource.swift */,
 				187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */,
 				18A9B9A326A7CB3F006CBD5C /* Info.plist */,
 			);
@@ -154,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				187617B326B10B0A001FE8AF /* MNLiveCardCellDataSource.swift in Sources */,
 				619994F626A9C6C000D94110 /* MNCloudLiveCardCell.swift in Sources */,
 				187EA6CB26A96EC500E648B8 /* MNCloudController.swift in Sources */,
 				187EA6C326A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift in Sources */,

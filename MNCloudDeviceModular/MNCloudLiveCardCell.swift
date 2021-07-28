@@ -7,49 +7,31 @@
 
 import UIKit
 
-public class LiveCardModel: NSObject {
-    
-    var indexPath: IndexPath?
-    var isOpen = false
-    
-    public var liveCardSize: CGSize {
-        let w = UIScreen.main.bounds.width
-        return isOpen ? CGSize(width: w, height: 388) : CGSize(width: w, height: 308)
-    }
-    
-    var imageName = "1"
-    var deviceLogoImageName = "sun"
-    var wifiImageName = "wifi"
-    
-    func reload() {
-        
-    }
-    
-}
 
-public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
-    func didTapDeviceName(cell: MNCloudLiveCardCell)
-    func didTapNetworkImage(cell: MNCloudLiveCardCell)
-    func didTapShareButton(cell: MNCloudLiveCardCell)
-    func didTapAlarmButton(cell: MNCloudLiveCardCell)
-    func didTapCloudStoreButton(cell: MNCloudLiveCardCell)
-    func didTapSettingButton(cell: MNCloudLiveCardCell)
-}
 
 public class MNCloudLiveCardCell: UICollectionViewCell {
     
-    public var model = LiveCardModel() {
-        didSet {
-            collectionPresenter.collection.isHidden = !model.isOpen
-            alarmButton.isSelected = model.isOpen
-            screenShoot.image = UIImage(named: model.imageName)
-            deviceLogo.setImage(UIImage(named: model.deviceLogoImageName), for: .normal)
-            networkStatus.setImage(UIImage(named: model.wifiImageName), for: .normal)
-        }
-    }
-    
     
     public weak var delegate: MNCloudLiveCardCellDelegate?
+    public weak var dataSource: MNCloudLiveCardCellDataSource? {
+        didSet {
+            guard let dataSource = dataSource else { return }
+            deviceLogo.setImage(dataSource.logo, for: .normal)
+            deviceName.setTitle(dataSource.name, for: .normal)
+            networkStatus.setImage(dataSource.networkStatus, for: .normal)
+            screenShoot.image = dataSource.videoHoler
+            shareButton.setImage(dataSource.bottomFirstImage, for: .normal)
+            shareButton.setTitle(dataSource.bottomFirstTitle, for: .normal)
+            alarmButton.setImage(dataSource.bottomSecondImage, for: .normal)
+            alarmButton.setTitle(dataSource.bottomSecondTitle, for: .normal)
+            cloudStoreButton.setImage(dataSource.bottomThirdImage, for: .normal)
+            cloudStoreButton.setTitle(dataSource.bottomThirdTitle, for: .normal)
+            settingButton.setImage(dataSource.bottomFourthImage, for: .normal)
+            settingButton.setTitle(dataSource.bottomFourthTitle, for: .normal)
+            collectionPresenter.collection.isHidden = !dataSource.isBottomViewOpen
+            setButtons()
+        }
+    }
     
     public lazy var topStack: UIStackView = {
         let t = UIStackView(arrangedSubviews: [deviceLogo, deviceName, networkStatus])
@@ -74,8 +56,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         let top = s.topAnchor.constraint(equalTo: topStack.bottomAnchor)
         let trailing = s.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         let h = s.heightAnchor.constraint(equalToConstant: 200)
-        let w = s.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-        NSLayoutConstraint.activate([leading, top, trailing, h, w])
+        NSLayoutConstraint.activate([leading, top, trailing, h])
         return s
     }()
     
@@ -124,16 +105,16 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }()
     
     public lazy var shareButton: UIButton = {
-        return defaultFootButton(with: "Share", action: #selector(shareButtonAction))
+        return defaultFootButton(with: "Share", itemTag: .first)
     }()
     public lazy var alarmButton: UIButton = {
-        return defaultFootButton(with: "Message", action: #selector(alarmButtonAction(sender:)))
+        return defaultFootButton(with: "Message", itemTag: .second)
     }()
     public lazy var cloudStoreButton: UIButton = {
-        return defaultFootButton(with: "Cloud", action: #selector(cloudStoreButtonAction))
+        return defaultFootButton(with: "Cloud", itemTag: .third)
     }()
     public lazy var settingButton: UIButton = {
-        return defaultFootButton(with: "Settings", action: #selector(settingsButtonAction))
+        return defaultFootButton(with: "Settings", itemTag: .fourth)
     }()
     
     private lazy var collectionPresenter: MNCloudLiveCardCellCollectionPresenter = {
@@ -142,12 +123,13 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return p
     }()
     
-    private func defaultFootButton(with title: String, imageName: String = "sun", fontSize: CGFloat = 12, action: Selector) -> UIButton {
+    private func defaultFootButton(with title: String, imageName: String = "sun", fontSize: CGFloat = 12, itemTag: LiveCardItem) -> UIButton {
         let button = UIButton(type: .custom)
         button.titleLabel?.font = .systemFont(ofSize: fontSize)
         button.setImage(UIImage(named: imageName), for: .normal)
         button.setTitle(title, for: .normal)
-        button.addTarget(self, action: action, for: .touchUpInside)
+        button.tag = itemTag.rawValue
+        button.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
         return button
     }
     
@@ -181,6 +163,10 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     public override func layoutSubviews() {
         super.layoutSubviews()
         
+        setButtons()
+    }
+    
+    func setButtons() {
         setButtonPosition(btn: shareButton)
         setButtonPosition(btn: alarmButton)
         setButtonPosition(btn: cloudStoreButton)
@@ -190,21 +176,10 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     // MARK: - Delegate calls ----------
     
-    @objc private func shareButtonAction() {
-        delegate?.didTapShareButton(cell: self)
+    @objc private func itemsActions(sender: UIButton) {
+        let item = LiveCardItem(rawValue: sender.tag)!
+        delegate?.didSelect(cell: self, at: item)
     }
     
-    @objc private func alarmButtonAction(sender: UIButton) {
-        model.isOpen = !model.isOpen
-        delegate?.didTapAlarmButton(cell: self)
-    }
-    
-    @objc private func cloudStoreButtonAction() {
-        delegate?.didTapCloudStoreButton(cell: self)
-    }
-    
-    @objc private func settingsButtonAction() {
-        delegate?.didTapSettingButton(cell: self)
-    }
 
 }

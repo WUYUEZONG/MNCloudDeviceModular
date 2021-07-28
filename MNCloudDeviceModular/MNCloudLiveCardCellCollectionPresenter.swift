@@ -12,14 +12,14 @@ class MNCloudLiveCardCellCollectionPresenter: NSObject {
     private var cell: MNCloudLiveCardCell!
     lazy var collection: UICollectionView = {
         let l = UICollectionViewFlowLayout()
-        l.itemSize = CGSize(width: 120, height: 80)
+        l.itemSize = CGSize(width: 120, height: 60)
         l.scrollDirection = .horizontal
         l.minimumLineSpacing = 10
-        l.minimumInteritemSpacing = 10
         let c = UICollectionView(frame: .zero, collectionViewLayout: l)
         c.dataSource = self
         c.delegate = self
         c.backgroundColor = .white
+        c.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         c.register(SingleImageCollectionCell.self, forCellWithReuseIdentifier: "SingleImageCollectionCell")
         cell.contentView.addSubview(c)
         c.translatesAutoresizingMaskIntoConstraints = false
@@ -50,6 +50,7 @@ extension MNCloudLiveCardCellCollectionPresenter: UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCollectionCell", for: indexPath) as! SingleImageCollectionCell
         cell.backgroundImage.image = UIImage(named: "1")
+        cell.recordingTime.text = "00:00:00"
         return cell
     }
     
