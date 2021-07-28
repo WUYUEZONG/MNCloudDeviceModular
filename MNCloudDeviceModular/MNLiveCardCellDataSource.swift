@@ -29,6 +29,8 @@ public protocol MNCloudLiveCardCellDataSource: NSObjectProtocol {
     var isBottomViewOpen: Bool { get }
     
     func liveCardSize(width: CGFloat) -> CGSize
+    
+    var subTitles: [String] { get }
 }
 
 extension MNCloudLiveCardCellDataSource {
