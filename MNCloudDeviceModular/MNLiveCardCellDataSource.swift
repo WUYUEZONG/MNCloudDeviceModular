@@ -14,25 +14,15 @@ public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
 
 public protocol MNCloudLiveCardCellDataSource: NSObjectProtocol {
    
-    var logo: UIImage? { get }
-    var name: String { get }
-    var networkStatus: UIImage? { get }
-    var videoHoler: UIImage? { get }
-    var bottomFirstImage: UIImage? { get }
-    var bottomFirstTitle: String { get }
-    var bottomSecondImage: UIImage? { get }
-    var bottomSecondTitle: String { get }
-    var bottomThirdImage: UIImage? { get }
-    var bottomThirdTitle: String { get }
-    var bottomFourthImage: UIImage? { get }
-    var bottomFourthTitle: String { get }
-    
+
     var isBottomViewOpen: Bool { get }
     
     func liveCardSize(width: CGFloat) -> CGSize
     
     var subCellCounts: Int { get }
     
+    func titleFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> String?
+    func imageFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> UIImage?
     func subTime(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> String
     func subImage(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> UIImage?
 }
@@ -51,4 +41,5 @@ public enum LiveCardItem: Int {
     case second = 104
     case third = 105
     case fourth = 106
+    case videoHolder = 107
 }

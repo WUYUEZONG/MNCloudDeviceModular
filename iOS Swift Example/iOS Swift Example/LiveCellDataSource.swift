@@ -9,8 +9,10 @@ import UIKit
 import MNCloudDeviceModular
 
 struct TestModel {
+    var name = "this is a device name"
     var is4G = false
     var isOpen = false
+    var dataCount = 0
 }
 
 class LiveCellModel: NSObject {
@@ -24,68 +26,48 @@ class LiveCellModel: NSObject {
 
 extension LiveCellModel: MNCloudLiveCardCellDataSource {
     
-    var logo: UIImage? {
-        UIImage(named: "sun")
+    
+    func titleFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> String? {
+        switch viewTagItem {
+        case .name:
+            return model.name
+        case .first:
+            return "share"
+        case .second:
+            return "message"
+        case .third:
+            return "cloud"
+        case .fourth:
+            return "settings"
+        default:
+            return nil
+        }
     }
     
-    var name: String {
-        return "Fisrt Devixxe"
+    func imageFor(_ cell: MNCloudLiveCardCell, viewTagItem:  LiveCardItem) -> UIImage? {
+        switch viewTagItem {
+        case .videoHolder:
+            return UIImage(named: "1")
+        default:
+            return UIImage(named: "sun")
+        }
     }
     
-    var networkStatus: UIImage? {
-        UIImage(named: "sun")
-    }
-    
-    var videoHoler: UIImage? {
-        UIImage(named: "1")
-    }
-    
-    var bottomFirstImage: UIImage? {
-        UIImage(named: "sun")
-    }
-    
-    var bottomFirstTitle: String {
-        "Share"
-    }
-    
-    var bottomSecondImage: UIImage? {
-        UIImage(named: "sun")
-    }
-    
-    var bottomSecondTitle: String {
-        "Message"
-    }
-    
-    var bottomThirdImage: UIImage? {
-        UIImage(named: "sun")
-    }
-    
-    var bottomThirdTitle: String {
-        return model.is4G ? "4G" : "Cloud"
-    }
-    
-    var bottomFourthImage: UIImage? {
-        UIImage(named: "sun")
-    }
-    
-    var bottomFourthTitle: String {
-        "settings"
-    }
     
     var isBottomViewOpen: Bool {
         model.isOpen
     }
     /// sub datas
     var subCellCounts: Int {
-        0
+        model.dataCount
     }
     
     func subTime(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> String {
-        "1"
+        "00:00:00"
     }
     
     func subImage(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> UIImage? {
-        nil
+        UIImage(named: "1")
     }
     
 }

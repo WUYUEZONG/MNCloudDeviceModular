@@ -11,30 +11,36 @@ import UIKit
 
 public class MNCloudLiveCardCell: UICollectionViewCell {
     
+    // MARK: - public var -
     
     public weak var delegate: MNCloudLiveCardCellDelegate?
     public weak var dataSource: MNCloudLiveCardCellDataSource? {
         didSet {
             guard let dataSource = dataSource else { return }
-            deviceLogo.setImage(dataSource.logo, for: .normal)
-            deviceName.setTitle(dataSource.name, for: .normal)
-            networkStatus.setImage(dataSource.networkStatus, for: .normal)
-            screenShoot.image = dataSource.videoHoler
-            shareButton.setImage(dataSource.bottomFirstImage, for: .normal)
-            shareButton.setTitle(dataSource.bottomFirstTitle, for: .normal)
-            alarmButton.setImage(dataSource.bottomSecondImage, for: .normal)
-            alarmButton.setTitle(dataSource.bottomSecondTitle, for: .normal)
-            cloudStoreButton.setImage(dataSource.bottomThirdImage, for: .normal)
-            cloudStoreButton.setTitle(dataSource.bottomThirdTitle, for: .normal)
-            settingButton.setImage(dataSource.bottomFourthImage, for: .normal)
-            settingButton.setTitle(dataSource.bottomFourthTitle, for: .normal)
-            collectionPresenter.collection.isHidden = !dataSource.isBottomViewOpen
+            logo.setImage(dataSource.imageFor(self, viewTagItem: .logo), for: .normal)
+            name.setTitle(dataSource.titleFor(self, viewTagItem: .name), for: .normal)
+            networkStatus.setImage(dataSource.imageFor(self, viewTagItem: .netStatus), for: .normal)
+            screenShoot.image = dataSource.imageFor(self, viewTagItem: .videoHolder)
+            setTitleImageForButton(shareButton, dataSource: dataSource)
+            setTitleImageForButton(alarmButton, dataSource: dataSource)
+            setTitleImageForButton(cloudStoreButton, dataSource: dataSource)
+            setTitleImageForButton(settingButton, dataSource: dataSource)
+            collectionPresenter.collection.isHidden = !dataSource.isBottomViewOpen || dataSource.subCellCounts == 0
+            collectionPresenter.collectionStatusLabel.isHidden = !dataSource.isBottomViewOpen || dataSource.subCellCounts > 0
             setButtons()
         }
     }
     
+    
+    private func setTitleImageForButton(_ button: UIButton, dataSource: MNCloudLiveCardCellDataSource) {
+        button.setTitle(dataSource.titleFor(self, viewTagItem: LiveCardItem(rawValue: button.tag)!), for: .normal)
+        button.setImage(dataSource.imageFor(self, viewTagItem: LiveCardItem(rawValue: button.tag)!), for: .normal)
+    }
+    
+    // MARK: - self.subviews start -
+    
     public lazy var topStack: UIStackView = {
-        let t = UIStackView(arrangedSubviews: [deviceLogo, deviceName, networkStatus])
+        let t = UIStackView(arrangedSubviews: [logo, name, networkStatus])
         t.axis = .horizontal
         contentView.addSubview(t)
         t.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +54,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     public lazy var screenShoot: UIImageView = {
         let s = UIImageView()
+        s.tag = LiveCardItem.videoHolder.rawValue
         s.contentMode = .scaleAspectFill
         s.clipsToBounds = true
         contentView.addSubview(s)
@@ -76,28 +83,32 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }()
     
     
-    public lazy var deviceLogo: UIButton = {
+    public lazy var logo: UIButton = {
         let d = UIButton(type: .custom)
         d.imageView?.contentMode = .scaleAspectFit
+        d.tag = LiveCardItem.logo.rawValue
         d.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         d.translatesAutoresizingMaskIntoConstraints = false
         let width = d.widthAnchor.constraint(equalToConstant: 36)
         NSLayoutConstraint.activate([width])
         return d
     }()
-    public lazy var deviceName: UIButton = {
+    public lazy var name: UIButton = {
         let d = UIButton(type: .system)
+        d.tag = LiveCardItem.name.rawValue
         d.titleLabel?.font = .systemFont(ofSize: 18)
         d.titleLabel?.textAlignment = .left
         d.tintColor = .black
         d.contentHorizontalAlignment = .left
-        d.setTitle("DeviceName", for: .normal)
+        d.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
         return d
     }()
     public lazy var networkStatus: UIButton = {
         let n = UIButton(type: .custom)
+        n.tag = LiveCardItem.netStatus.rawValue
         n.imageView?.contentMode = .scaleAspectFit
         n.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        n.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
         n.translatesAutoresizingMaskIntoConstraints = false
         let width = n.widthAnchor.constraint(equalToConstant: 36)
         NSLayoutConstraint.activate([width])
@@ -117,7 +128,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return defaultFootButton(with: "Settings", itemTag: .fourth)
     }()
     
-    private lazy var collectionPresenter: MNCloudLiveCardCellCollectionPresenter = {
+    public lazy var collectionPresenter: MNCloudLiveCardCellCollectionPresenter = {
         let p = MNCloudLiveCardCellCollectionPresenter(self)
         p.collection.delegate = self
         return p
@@ -133,15 +144,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return button
     }
     
-    private func setButtonPosition(btn: UIButton) {
-        guard let imageView = btn.imageView, let titleLabel = btn.titleLabel else {
-            return
-        }
-        
-        btn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: titleLabel.frame.height, right: -titleLabel.frame.width)
-        btn.titleEdgeInsets = UIEdgeInsets(top: imageView.frame.height, left: -imageView.frame.width, bottom: 0, right: 0)
-    }
-    
+    // MARK: - self.subviews end : init views -
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -173,8 +176,17 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         setButtonPosition(btn: settingButton)
     }
     
+    private func setButtonPosition(btn: UIButton) {
+        guard let imageView = btn.imageView, let titleLabel = btn.titleLabel else {
+            return
+        }
+        
+        btn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: titleLabel.frame.height, right: -titleLabel.frame.width)
+        btn.titleEdgeInsets = UIEdgeInsets(top: imageView.frame.height, left: -imageView.frame.width, bottom: 0, right: 0)
+    }
     
-    // MARK: - Delegate calls ----------
+    
+    // MARK: - Delegate calls -
     
     @objc private func itemsActions(sender: UIButton) {
         let item = LiveCardItem(rawValue: sender.tag)!

@@ -7,10 +7,10 @@
 
 import UIKit
 
-class MNCloudLiveCardCellCollectionPresenter: NSObject {
+public class MNCloudLiveCardCellCollectionPresenter: NSObject {
     
     private var cell: MNCloudLiveCardCell!
-    lazy var collection: UICollectionView = {
+    public lazy var collection: UICollectionView = {
         let l = UICollectionViewFlowLayout()
         l.itemSize = CGSize(width: 120, height: 60)
         l.scrollDirection = .horizontal
@@ -34,22 +34,45 @@ class MNCloudLiveCardCellCollectionPresenter: NSObject {
         
     }()
     
+    lazy var collectionStatusLabel: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.text = "数据载入中..."
+        label.textColor = .blue
+        label.textAlignment = .center
+        cell.contentView.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let x = label.centerXAnchor.constraint(equalTo: collection.centerXAnchor)
+        let y = label.centerYAnchor.constraint(equalTo: collection.centerYAnchor)
+        NSLayoutConstraint.activate([x, y])
+        return label
+    }()
+    
+    
+    
     init(_ cell: MNCloudLiveCardCell) {
         self.cell = cell
+    }
+    
+    public func showCollectionStatusWithReady() {
+        collectionStatusLabel.text = "数据载入中..."
+    }
+    public func setCollectionStatusWithNoData() {
+        collectionStatusLabel.text = "没有更多数据了"
     }
 
 }
 
 extension MNCloudLiveCardCellCollectionPresenter: UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let dataSource = self.cell.dataSource else {
             return 0
         }
         return dataSource.subCellCounts
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCollectionCell", for: indexPath) as! SingleImageCollectionCell
         cell.backgroundImage.image = self.cell.dataSource?.subImage(collectionView, forCellAt: indexPath)
         cell.recordingTime.text = self.cell.dataSource?.subTime(collectionView, forCellAt: indexPath)
