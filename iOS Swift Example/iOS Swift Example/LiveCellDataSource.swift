@@ -14,7 +14,7 @@ struct TestModel {
 }
 
 class LiveCellModel: NSObject {
-    var cutTitles: [String]!
+    
     var model = TestModel()
     convenience init(model: TestModel) {
         self.init()
@@ -23,21 +23,6 @@ class LiveCellModel: NSObject {
 }
 
 extension LiveCellModel: MNCloudLiveCardCellDataSource {
-    
-    var subTitles: [String] {
-        guard let cutTitles = cutTitles else {
-            let semaphore = DispatchSemaphore.init(value: 0)
-            var titles: [String] = []
-            DispatchQueue.global().async {
-                self.cutTitles = titles
-                semaphore.signal()
-            }
-            // 十亿分之一秒 = 1ns
-            let _ = semaphore.wait(timeout: .now().advanced(by: .seconds(3)))
-            return cutTitles
-        }
-        return cutTitles
-    }
     
     var logo: UIImage? {
         UIImage(named: "sun")
@@ -89,6 +74,18 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
     
     var isBottomViewOpen: Bool {
         model.isOpen
+    }
+    /// sub datas
+    var subCellCounts: Int {
+        0
+    }
+    
+    func subTime(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> String {
+        "1"
+    }
+    
+    func subImage(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> UIImage? {
+        nil
     }
     
 }

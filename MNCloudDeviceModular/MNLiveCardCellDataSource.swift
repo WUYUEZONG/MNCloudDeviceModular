@@ -9,6 +9,7 @@ import UIKit
 
 public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
     func didSelect(cell: MNCloudLiveCardCell, at item: LiveCardItem)
+    func didSelect(collectionView: UICollectionView, at indexPath: IndexPath)
 }
 
 public protocol MNCloudLiveCardCellDataSource: NSObjectProtocol {
@@ -30,7 +31,10 @@ public protocol MNCloudLiveCardCellDataSource: NSObjectProtocol {
     
     func liveCardSize(width: CGFloat) -> CGSize
     
-    var subTitles: [String] { get }
+    var subCellCounts: Int { get }
+    
+    func subTime(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> String
+    func subImage(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> UIImage?
 }
 
 extension MNCloudLiveCardCellDataSource {

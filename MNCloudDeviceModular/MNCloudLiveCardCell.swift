@@ -119,7 +119,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     private lazy var collectionPresenter: MNCloudLiveCardCellCollectionPresenter = {
         let p = MNCloudLiveCardCellCollectionPresenter(self)
-        let _ = p.collection
+        p.collection.delegate = self
         return p
     }()
     
@@ -182,4 +182,11 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }
     
 
+}
+
+
+extension MNCloudLiveCardCell: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didSelect(collectionView: collectionView, at: indexPath)
+    }
 }
