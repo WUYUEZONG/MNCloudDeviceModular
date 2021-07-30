@@ -13,13 +13,6 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     // MARK: - public func -
     
-    public func showCollectionReadyToLoading() {
-        collectionPresenter.collectionStatusLabel.text = "正在载入数据..."
-    }
-    public func setCollectionNoDataIfNeed() {
-        guard let dataSource = dataSource, dataSource.subCellCounts == 0  else { return }
-        collectionPresenter.collectionStatusLabel.text = "没有任何数据"
-    }
     
     // MARK: - public var -
     
@@ -39,6 +32,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
             collectionPresenter.collection.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .collection)
             shareButton.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .first)
             collectionPresenter.collectionStatusLabel.isHidden = !dataSource.isBottomViewOpen || dataSource.subCellCounts > 0
+            collectionPresenter.collectionStatusLabel.text = dataSource.titleFor(self, viewTagItem: .collectionDataLoadingHolder)
             collectionPresenter.collection.reloadData()
             setButtons()
         }
@@ -51,6 +45,11 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }
     
     // MARK: - self.subviews start -
+    
+    let topStackHeight: CGFloat = 48
+    let screenShootHeight: CGFloat = 200
+    let bottomStackHeight: CGFloat = 60
+    let collectionHeight: CGFloat = 80
     
     lazy var contentStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [topStack, screenShoot, bottomStack])
@@ -67,7 +66,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     public lazy var topStack: UIStackView = {
         let t = UIStackView(arrangedSubviews: [logo, name, networkStatus])
         t.axis = .horizontal
-        let h = t.heightAnchor.constraint(equalToConstant: 48)
+        let h = t.heightAnchor.constraint(equalToConstant: topStackHeight)
         NSLayoutConstraint.activate([h])
         return t
     }()
@@ -77,7 +76,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         s.tag = LiveCardItem.videoHolder.rawValue
         s.contentMode = .scaleAspectFill
         s.clipsToBounds = true
-        let h = s.heightAnchor.constraint(equalToConstant: 200)
+        let h = s.heightAnchor.constraint(equalToConstant: screenShootHeight)
         NSLayoutConstraint.activate([h])
         return s
     }()
@@ -87,7 +86,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         b.axis = .horizontal
         b.alignment = .fill
         b.distribution = .fillEqually
-        let h = b.heightAnchor.constraint(equalToConstant: 60)
+        let h = b.heightAnchor.constraint(equalToConstant: bottomStackHeight)
         NSLayoutConstraint.activate([h])
         return b
     }()
@@ -99,13 +98,14 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         d.tag = LiveCardItem.logo.rawValue
         d.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         d.translatesAutoresizingMaskIntoConstraints = false
-        let width = d.widthAnchor.constraint(equalToConstant: 36)
+        let width = d.widthAnchor.constraint(equalToConstant: 50)
         NSLayoutConstraint.activate([width])
         return d
     }()
     public lazy var name: UIButton = {
         let d = UIButton(type: .system)
         d.tag = LiveCardItem.name.rawValue
+        d.titleLabel?.text = "name"
         d.titleLabel?.font = .systemFont(ofSize: 18)
         d.titleLabel?.textAlignment = .left
         d.tintColor = .black
@@ -170,7 +170,14 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         contentView.backgroundColor = .lightGray
         let _ = contentStack
         let _ = collectionPresenter
-        
+        logo.backgroundColor = contentView.backgroundColor
+        name.backgroundColor = contentView.backgroundColor
+        networkStatus.backgroundColor = contentView.backgroundColor
+        shareButton.backgroundColor = contentView.backgroundColor
+        alarmButton.backgroundColor = contentView.backgroundColor
+        cloudStoreButton.backgroundColor = contentView.backgroundColor
+        settingButton.backgroundColor = contentView.backgroundColor
+        contentView.layer.cornerRadius = 8
     }
     
     public override func layoutSubviews() {

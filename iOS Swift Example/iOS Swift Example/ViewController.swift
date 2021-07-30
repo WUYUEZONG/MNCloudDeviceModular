@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     lazy var data: [LiveCellModel] = {
         
-        return [LiveCellModel(model: TestModel(name: "1", is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(name: "ZHji999999999ZHji999999999ZHji999999999", is4G: true))/*, LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true))*/]
+        return [LiveCellModel(model: TestModel(name: "1", is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(name: "ZHji999999999ZHji999999999ZHji999999999", is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true))]
     }()
     
     @IBOutlet weak var collection: UICollectionView! {
@@ -87,7 +87,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
 }
-// MARK - cell sorts
+// MARK: - cell sorts -
 extension ViewController {
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return true
@@ -98,7 +98,9 @@ extension ViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        let sourceData = data[sourceIndexPath.row]
+        data.remove(at: sourceIndexPath.row)
+        data.insert(sourceData, at: destinationIndexPath.row)
     }
     
 }
@@ -113,7 +115,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 extension ViewController: MNCloudLiveCardCellDelegate {
     
     func didSelect(collectionView: UICollectionView, at indexPath: IndexPath) {
-        
+        debugPrint("did select collection at: \(indexPath.row)")
     }
     
     
@@ -124,23 +126,19 @@ extension ViewController: MNCloudLiveCardCellDelegate {
                 guard i.row < data.count else { return }
                 let model = data[i.row]
                 model.isOpen = !model.isOpen
-                cell.showCollectionReadyToLoading()
-                debugPrint("1 realoding cell at \(i.row)")
+                model.dataLoadingHolder = "数据载入中..."
                 collection.reloadItems(at: [i])
                 if model.isOpen && model.dataCount == 0 {
-                    
                     DispatchQueue.global().async {
                         sleep(2)
+                        model.dataCount = 50
+                        model.dataLoadingHolder = "没有任何数据"
                         DispatchQueue.main.async {
-                            model.dataCount = 0
-                            cell.setCollectionNoDataIfNeed()
                             debugPrint("2 realoding cell at \(i.row)")
                             self.collection.reloadItems(at: [i])
                         }
                     }
                 }
-                
-                
             }
         default:
             debugPrint("\(item)")

@@ -17,6 +17,7 @@ class LiveCellModel: NSObject {
     
     var model = TestModel()
     
+    var dataLoadingHolder = "data is loading..."
     var isOpen = false
     var dataCount = 0
     
@@ -31,11 +32,7 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
     func isItemShouldHide(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> Bool {
         switch viewTagItem {
         case .collection:
-//            if model.isOpen {
-//                return model.dataCount == 0
-//            }
-//            return true
-            return !isOpen
+            return isOpen ? dataCount == 0 : true
         default:
             return false
         }
@@ -49,6 +46,8 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
         switch viewTagItem {
         case .name:
             return model.name
+        case .collectionDataLoadingHolder:
+            return dataLoadingHolder
         case .first:
             return "share"
         case .second:

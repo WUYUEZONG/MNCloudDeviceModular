@@ -12,17 +12,18 @@ public class MNCloudLiveCardCellCollectionPresenter: NSObject {
     private var cell: MNCloudLiveCardCell!
     public lazy var collection: UICollectionView = {
         let l = UICollectionViewFlowLayout()
-        l.itemSize = CGSize(width: 120, height: 60)
+        let itemSpace: CGFloat = 10
+        l.itemSize = CGSize(width: 120, height: cell.collectionHeight - (itemSpace * 2))
         l.scrollDirection = .horizontal
-        l.minimumLineSpacing = 10
+        l.minimumLineSpacing = itemSpace
         let c = UICollectionView(frame: .zero, collectionViewLayout: l)
         c.dataSource = self
         c.tag = LiveCardItem.collection.rawValue
         c.backgroundColor = .white
-        c.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        c.contentInset = UIEdgeInsets(top: itemSpace, left: itemSpace, bottom: itemSpace, right: itemSpace)
         c.register(SingleImageCollectionCell.self, forCellWithReuseIdentifier: "SingleImageCollectionCell")
         cell.contentStack.addArrangedSubview(c)
-        let h = c.heightAnchor.constraint(equalToConstant: 80)
+        let h = c.heightAnchor.constraint(equalToConstant: cell.collectionHeight)
         NSLayoutConstraint.activate([h])
 
         c.isHidden = true
@@ -36,7 +37,7 @@ public class MNCloudLiveCardCellCollectionPresenter: NSObject {
         label.isHidden = true
         label.text = "数据载入中..."
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = .cyan
+        label.textColor = .gray
         label.textAlignment = .center
         cell.contentView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false

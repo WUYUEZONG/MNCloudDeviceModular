@@ -44,4 +44,5 @@ public enum LiveCardItem: Int {
     case fourth = 106
     case videoHolder = 107
     case collection = 108
+    case collectionDataLoadingHolder = 109
 }
