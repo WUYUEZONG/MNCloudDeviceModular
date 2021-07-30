@@ -11,12 +11,27 @@ import UIKit
 
 public class MNCloudLiveCardCell: UICollectionViewCell {
     
+    // MARK: - public func -
+    
+    public func showCollectionReadyToLoading() {
+        collectionPresenter.collectionStatusLabel.text = "正在载入数据..."
+    }
+    public func setCollectionNoDataIfNeed() {
+        guard let dataSource = dataSource, dataSource.subCellCounts == 0  else { return }
+        collectionPresenter.collectionStatusLabel.text = "没有任何数据"
+    }
+    
+    public func reloadCellCollection() {
+        collectionPresenter.collection.reloadData()
+    }
+    
     // MARK: - public var -
     
     public weak var delegate: MNCloudLiveCardCellDelegate?
     public weak var dataSource: MNCloudLiveCardCellDataSource? {
         didSet {
             guard let dataSource = dataSource else { return }
+            debugPrint("set dataSource counts is ", dataSource.subCellCounts)
             logo.setImage(dataSource.imageFor(self, viewTagItem: .logo), for: .normal)
             name.setTitle(dataSource.titleFor(self, viewTagItem: .name), for: .normal)
             networkStatus.setImage(dataSource.imageFor(self, viewTagItem: .netStatus), for: .normal)
@@ -25,7 +40,8 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
             setTitleImageForButton(alarmButton, dataSource: dataSource)
             setTitleImageForButton(cloudStoreButton, dataSource: dataSource)
             setTitleImageForButton(settingButton, dataSource: dataSource)
-            collectionPresenter.collection.isHidden = !dataSource.isBottomViewOpen || dataSource.subCellCounts == 0
+            collectionPresenter.collection.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .collection)
+            shareButton.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .first)
             collectionPresenter.collectionStatusLabel.isHidden = !dataSource.isBottomViewOpen || dataSource.subCellCounts > 0
             setButtons()
         }
@@ -39,16 +55,23 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     // MARK: - self.subviews start -
     
+    lazy var contentStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [topStack, screenShoot, bottomStack])
+        stack.axis = .vertical
+        contentView.addSubview(stack)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        let leading = stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+        let top = stack.topAnchor.constraint(equalTo: contentView.topAnchor)
+        let trailing = stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        NSLayoutConstraint.activate([leading, top, trailing])
+        return stack
+    }()
+    
     public lazy var topStack: UIStackView = {
         let t = UIStackView(arrangedSubviews: [logo, name, networkStatus])
         t.axis = .horizontal
-        contentView.addSubview(t)
-        t.translatesAutoresizingMaskIntoConstraints = false
-        let leading = t.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10)
-        let top = t.topAnchor.constraint(equalTo: contentView.topAnchor)
-        let trailing = t.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         let h = t.heightAnchor.constraint(equalToConstant: 48)
-        NSLayoutConstraint.activate([leading, top, trailing, h])
+        NSLayoutConstraint.activate([h])
         return t
     }()
     
@@ -57,13 +80,8 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         s.tag = LiveCardItem.videoHolder.rawValue
         s.contentMode = .scaleAspectFill
         s.clipsToBounds = true
-        contentView.addSubview(s)
-        s.translatesAutoresizingMaskIntoConstraints = false
-        let leading = s.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
-        let top = s.topAnchor.constraint(equalTo: topStack.bottomAnchor)
-        let trailing = s.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         let h = s.heightAnchor.constraint(equalToConstant: 200)
-        NSLayoutConstraint.activate([leading, top, trailing, h])
+        NSLayoutConstraint.activate([h])
         return s
     }()
     
@@ -72,13 +90,8 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         b.axis = .horizontal
         b.alignment = .fill
         b.distribution = .fillEqually
-        contentView.addSubview(b)
-        b.translatesAutoresizingMaskIntoConstraints = false
         let h = b.heightAnchor.constraint(equalToConstant: 60)
-        let leading = b.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
-        let trailing = b.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-        let top = b.topAnchor.constraint(equalTo: screenShoot.bottomAnchor)
-        NSLayoutConstraint.activate([h, leading, trailing, top])
+        NSLayoutConstraint.activate([h])
         return b
     }()
     
@@ -128,7 +141,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return defaultFootButton(with: "Settings", itemTag: .fourth)
     }()
     
-    public lazy var collectionPresenter: MNCloudLiveCardCellCollectionPresenter = {
+    lazy var collectionPresenter: MNCloudLiveCardCellCollectionPresenter = {
         let p = MNCloudLiveCardCellCollectionPresenter(self)
         p.collection.delegate = self
         return p
@@ -158,7 +171,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     func initUI() {
         contentView.backgroundColor = .lightGray
-        let _ = bottomStack
+        let _ = contentStack
         let _ = collectionPresenter
         
     }

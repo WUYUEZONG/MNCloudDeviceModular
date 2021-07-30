@@ -26,6 +26,22 @@ class LiveCellModel: NSObject {
 
 extension LiveCellModel: MNCloudLiveCardCellDataSource {
     
+    func isItemShouldHide(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> Bool {
+        switch viewTagItem {
+        case .collection:
+//            if model.isOpen {
+//                return model.dataCount == 0
+//            }
+//            return true
+            return !model.isOpen
+        default:
+            return false
+        }
+        
+        
+    }
+    
+    
     
     func titleFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> String? {
         switch viewTagItem {

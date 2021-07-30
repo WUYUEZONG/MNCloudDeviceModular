@@ -21,6 +21,7 @@ public protocol MNCloudLiveCardCellDataSource: NSObjectProtocol {
     
     var subCellCounts: Int { get }
     
+    func isItemShouldHide(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> Bool
     func titleFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> String?
     func imageFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> UIImage?
     func subTime(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> String
@@ -42,4 +43,5 @@ public enum LiveCardItem: Int {
     case third = 105
     case fourth = 106
     case videoHolder = 107
+    case collection = 108
 }

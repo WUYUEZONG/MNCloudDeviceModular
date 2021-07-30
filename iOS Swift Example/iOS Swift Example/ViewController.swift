@@ -23,6 +23,7 @@ class ViewController: UIViewController {
             l.minimumLineSpacing = 12
             l.scrollDirection = .vertical
             collection.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            collection.backgroundColor = .systemBlue
             collection.setCollectionViewLayout(l, animated: false)
             collection.register(MNCloudLiveCardCell.self, forCellWithReuseIdentifier: "MNCloudLiveCardCell")
             collection.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressAction(_:))))
@@ -82,7 +83,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        debugPrint("sub count is \(data[indexPath.row].model.dataCount)")
     }
     
 }
@@ -120,16 +121,23 @@ extension ViewController: MNCloudLiveCardCellDelegate {
         switch item {
         case .second:
             if let i = collection.indexPath(for: cell) {
-                self.data[i.row].model.isOpen = !self.data[i.row].model.isOpen
-                self.collection.reloadItems(at: [i])
-                cell.collectionPresenter.showCollectionStatusWithReady()
-                DispatchQueue.global().async {
-                    sleep(3)
-                    DispatchQueue.main.async {
-                        self.data[i.row].model.dataCount = 10
-                        cell.collectionPresenter.setCollectionStatusWithNoData()
-                        cell.collectionPresenter.collection.reloadData()
-                        self.collection.reloadItems(at: [i])
+                
+                data[i.row].model.isOpen = !data[i.row].model.isOpen
+//                cell.showCollectionReadyToLoading()
+                debugPrint("1 realoding cell at \(i.row)")
+                collection.reloadItems(at: [i])
+                if data[i.row].model.isOpen && data[i.row].model.dataCount == 0 {
+                    
+                    DispatchQueue.global().async {
+                        sleep(1)
+                        DispatchQueue.main.async {
+                            
+                            self.data[i.row].model.dataCount = 50
+                            cell.setCollectionNoDataIfNeed()
+                            debugPrint("2 realoding cell at \(i.row)")
+                            cell.reloadCellCollection()
+                            self.collection.reloadItems(at: [i])
+                        }
                     }
                 }
                 
