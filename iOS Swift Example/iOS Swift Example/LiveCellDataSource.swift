@@ -11,13 +11,15 @@ import MNCloudDeviceModular
 struct TestModel {
     var name = "this is a device name"
     var is4G = false
-    var isOpen = false
-    var dataCount = 0
 }
 
 class LiveCellModel: NSObject {
     
     var model = TestModel()
+    
+    var isOpen = false
+    var dataCount = 0
+    
     convenience init(model: TestModel) {
         self.init()
         self.model = model
@@ -33,7 +35,7 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
 //                return model.dataCount == 0
 //            }
 //            return true
-            return !model.isOpen
+            return !isOpen
         default:
             return false
         }
@@ -71,11 +73,11 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
     
     
     var isBottomViewOpen: Bool {
-        model.isOpen
+        isOpen
     }
     /// sub datas
     var subCellCounts: Int {
-        model.dataCount
+        dataCount
     }
     
     func subTime(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> String {

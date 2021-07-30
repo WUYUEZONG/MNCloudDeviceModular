@@ -21,10 +21,6 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         collectionPresenter.collectionStatusLabel.text = "没有任何数据"
     }
     
-    public func reloadCellCollection() {
-        collectionPresenter.collection.reloadData()
-    }
-    
     // MARK: - public var -
     
     public weak var delegate: MNCloudLiveCardCellDelegate?
@@ -43,6 +39,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
             collectionPresenter.collection.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .collection)
             shareButton.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .first)
             collectionPresenter.collectionStatusLabel.isHidden = !dataSource.isBottomViewOpen || dataSource.subCellCounts > 0
+            collectionPresenter.collection.reloadData()
             setButtons()
         }
     }

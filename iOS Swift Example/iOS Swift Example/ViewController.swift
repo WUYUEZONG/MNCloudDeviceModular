@@ -83,7 +83,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        debugPrint("sub count is \(data[indexPath.row].model.dataCount)")
+        debugPrint("sub count is \(data[indexPath.row].dataCount)")
     }
     
 }
@@ -121,21 +121,20 @@ extension ViewController: MNCloudLiveCardCellDelegate {
         switch item {
         case .second:
             if let i = collection.indexPath(for: cell) {
-                
-                data[i.row].model.isOpen = !data[i.row].model.isOpen
-//                cell.showCollectionReadyToLoading()
+                guard i.row < data.count else { return }
+                let model = data[i.row]
+                model.isOpen = !model.isOpen
+                cell.showCollectionReadyToLoading()
                 debugPrint("1 realoding cell at \(i.row)")
                 collection.reloadItems(at: [i])
-                if data[i.row].model.isOpen && data[i.row].model.dataCount == 0 {
+                if model.isOpen && model.dataCount == 0 {
                     
                     DispatchQueue.global().async {
-                        sleep(1)
+                        sleep(2)
                         DispatchQueue.main.async {
-                            
-                            self.data[i.row].model.dataCount = 50
+                            model.dataCount = 0
                             cell.setCollectionNoDataIfNeed()
                             debugPrint("2 realoding cell at \(i.row)")
-                            cell.reloadCellCollection()
                             self.collection.reloadItems(at: [i])
                         }
                     }
@@ -147,6 +146,7 @@ extension ViewController: MNCloudLiveCardCellDelegate {
             debugPrint("\(item)")
         }
     }
+    
     
     
     
