@@ -29,7 +29,17 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
             setTitleImageForButton(alarmButton, dataSource: dataSource)
             setTitleImageForButton(cloudStoreButton, dataSource: dataSource)
             setTitleImageForButton(settingButton, dataSource: dataSource)
-            collectionPresenter.collection.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .collection)
+            let collectionIsHiden = dataSource.isItemShouldHide(self, viewTagItem: .collection)
+            collectionPresenter.collection.isHidden = collectionIsHiden
+            collectionPresenter.collection.alpha = 0
+            if !collectionIsHiden {
+                // 添加动画使得显示更加自然
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                    UIView.animate(withDuration: 1.2) {
+                        self.collectionPresenter.collection.alpha = 1
+                    }
+                }
+            }
             shareButton.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .first)
             collectionPresenter.collectionStatusLabel.isHidden = !dataSource.isBottomViewOpen || dataSource.subCellCounts > 0
             collectionPresenter.collectionStatusLabel.text = dataSource.titleFor(self, viewTagItem: .collectionDataLoadingHolder)

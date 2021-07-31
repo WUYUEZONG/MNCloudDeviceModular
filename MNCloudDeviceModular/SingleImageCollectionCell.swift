@@ -14,6 +14,7 @@ class SingleImageCollectionCell: UICollectionViewCell {
         bImg.clipsToBounds = true
         bImg.layer.cornerRadius = 4
         bImg.contentMode = .scaleAspectFill
+        bImg.backgroundColor = contentView.backgroundColor
         contentView.addSubview(bImg)
         bImg.translatesAutoresizingMaskIntoConstraints = false
         let leading = bImg.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
@@ -42,6 +43,8 @@ class SingleImageCollectionCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        contentView.backgroundColor = .white
+        
         // Initialization code
     }
 
