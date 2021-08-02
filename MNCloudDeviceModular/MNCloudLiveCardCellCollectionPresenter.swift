@@ -35,7 +35,7 @@ public class MNCloudLiveCardCellCollectionPresenter: NSObject {
     lazy var collectionStatusLabel: UILabel = {
         let label = UILabel()
         label.isHidden = true
-        label.text = "数据载入中..."
+        //label.text = "数据载入中..."
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .gray
         label.textAlignment = .center

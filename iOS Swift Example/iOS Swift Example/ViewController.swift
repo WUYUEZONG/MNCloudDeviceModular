@@ -126,17 +126,15 @@ extension ViewController: MNCloudLiveCardCellDelegate {
             guard let i = collection.indexPath(for: cell), i.row < data.count else { return }
             let model = data[i.row]
             model.isOpen = !model.isOpen
-//            model.dataLoadingHolder = "数据载入中..."
-            cell.showLoading(true)
+            model.dataLoadingHolder = "loading..."
             collection.reloadItems(at: [i])
             
             guard model.isOpen && model.dataCount == 0 else { return }
             DispatchQueue.global().async {
                 sleep(2)
-                model.dataCount = 50
-//                model.dataLoadingHolder = "没有任何数据"
+                model.dataCount = 0
                 DispatchQueue.main.async {
-                    cell.showLoading(false)
+                    model.dataLoadingHolder = "no more data"
                     self.collection.reloadItems(at: [i])
                 }
             }

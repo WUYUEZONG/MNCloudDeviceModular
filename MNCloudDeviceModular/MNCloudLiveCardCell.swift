@@ -13,28 +13,6 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     // MARK: - public func -
     
-    /**
-     This is a default loading holder
-     
-     Coustom use `dataSource:` with the item `.collectionDataLoadingHolder`
-     ```
-     func title(for cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> String?
-     ```
-     - Note:
-     Call in `MainThread`
-     
-     - Parameters:
-        - isStart: is going to start loading.
-     */
-    public func showLoading(_ isStart: Bool) {
-        if isStart {
-            collectionPresenter.collectionStatusLabel.text = "Loading Data..."
-        } else {
-            if let dataSource = dataSource, dataSource.numOfcollectionCell() <= 0 {
-                collectionPresenter.collectionStatusLabel.text = "No More Data"
-            }
-        }
-    }
     
     // MARK: - public var -
     
