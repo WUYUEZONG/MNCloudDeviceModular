@@ -29,21 +29,18 @@ class LiveCellModel: NSObject {
 
 extension LiveCellModel: MNCloudLiveCardCellDataSource {
     
-    func isItemShouldHide(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> Bool {
-        switch viewTagItem {
+    func isHide(at cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> Bool {
+        switch item {
         case .collection:
             return isOpen ? dataCount == 0 : true
         default:
             return false
         }
-        
-        
     }
     
     
-    
-    func titleFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> String? {
-        switch viewTagItem {
+    func title(for cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> String? {
+        switch item {
         case .name:
             return model.name
         case .collectionDataLoadingHolder:
@@ -53,7 +50,7 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
         case .second:
             return "message"
         case .third:
-            return "cloud"
+            return model.is4G ? "4G" : "cloud"
         case .fourth:
             return "settings"
         default:
@@ -61,8 +58,8 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
         }
     }
     
-    func imageFor(_ cell: MNCloudLiveCardCell, viewTagItem:  LiveCardItem) -> UIImage? {
-        switch viewTagItem {
+    func image(for cell: MNCloudLiveCardCell, forTaged item:  LiveCardItem) -> UIImage? {
+        switch item {
         case .videoHolder:
             return UIImage(named: "1")
         default:
@@ -74,17 +71,18 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
     var isBottomViewOpen: Bool {
         isOpen
     }
-    /// sub datas
-    var subCellCounts: Int {
+    
+    // MARK: - sub datas -
+    
+    func numOfcollectionCell() -> Int {
         dataCount
     }
     
-    func subTime(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> String {
+    func time(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> String {
         "00:00:00"
     }
     
-    func subImage(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> UIImage? {
+    func image(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> UIImage? {
         UIImage(named: "1")
     }
-    
 }

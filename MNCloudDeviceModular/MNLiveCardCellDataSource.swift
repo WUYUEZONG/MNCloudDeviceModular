@@ -19,13 +19,31 @@ public protocol MNCloudLiveCardCellDataSource: NSObjectProtocol {
     
     func liveCardSize(width: CGFloat) -> CGSize
     
-    var subCellCounts: Int { get }
-    
-    func isItemShouldHide(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> Bool
-    func titleFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> String?
-    func imageFor(_ cell: MNCloudLiveCardCell, viewTagItem: LiveCardItem) -> UIImage?
-    func subTime(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> String
-    func subImage(_ collectionView: UICollectionView, forCellAt indexPath: IndexPath) -> UIImage?
+    /// number of cell for bottom collection
+    func numOfcollectionCell() -> Int
+    /**
+     Hidden control of `LiveCardItem`
+     - Parameters:
+        - cell: `MNCloudLiveCardCell`
+        - item: view of `MNCloudLiveCardCell` taged by `LiveCardItem`
+     */
+    func isHide(at cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> Bool
+    /**
+     title of `LiveCardItem`
+     - Parameters:
+        - cell: `MNCloudLiveCardCell`
+        - item: view of `MNCloudLiveCardCell` taged by `LiveCardItem`
+     */
+    func title(for cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> String?
+    /**
+     image of `LiveCardItem`
+     - Parameters:
+        - cell: `MNCloudLiveCardCell`
+        - item: view of `MNCloudLiveCardCell` taged by `LiveCardItem`
+     */
+    func image(for cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> UIImage?
+    func time(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> String
+    func image(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> UIImage?
 }
 
 extension MNCloudLiveCardCellDataSource {
@@ -35,14 +53,24 @@ extension MNCloudLiveCardCellDataSource {
 }
 
 public enum LiveCardItem: Int {
+    /// LiveCardCell's top-left icon
     case logo = 100
+    /// LiveCardCell's top-middle icon
     case name = 101
+    /// LiveCardCell's top-right last icon
     case netStatus = 102
+    /// LiveCardCell's bottom-first icon
     case first = 103
+    /// LiveCardCell's bottom-second icon
     case second = 104
+    /// LiveCardCell's bottom-third icon
     case third = 105
+    /// LiveCardCell's bottom-fourth icon
     case fourth = 106
+    /// LiveCardCell's center image
     case videoHolder = 107
+    /// LiveCardCell's bottom-collection icon
     case collection = 108
+    /// LiveCardCell's bottom-collection loadingHolder icon
     case collectionDataLoadingHolder = 109
 }

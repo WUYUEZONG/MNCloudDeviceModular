@@ -13,6 +13,28 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     // MARK: - public func -
     
+    /**
+     This is a default loading holder
+     
+     Coustom use `dataSource:` with the item `.collectionDataLoadingHolder`
+     ```
+     func title(for cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> String?
+     ```
+     - Note:
+     Call in `MainThread`
+     
+     - Parameters:
+        - isStart: is going to start loading.
+     */
+    public func showLoading(_ isStart: Bool) {
+        if isStart {
+            collectionPresenter.collectionStatusLabel.text = "Loading Data..."
+        } else {
+            if let dataSource = dataSource, dataSource.numOfcollectionCell() <= 0 {
+                collectionPresenter.collectionStatusLabel.text = "No More Data"
+            }
+        }
+    }
     
     // MARK: - public var -
     
@@ -20,16 +42,15 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     public weak var dataSource: MNCloudLiveCardCellDataSource? {
         didSet {
             guard let dataSource = dataSource else { return }
-            debugPrint("set dataSource counts is ", dataSource.subCellCounts)
-            logo.setImage(dataSource.imageFor(self, viewTagItem: .logo), for: .normal)
-            name.setTitle(dataSource.titleFor(self, viewTagItem: .name), for: .normal)
-            networkStatus.setImage(dataSource.imageFor(self, viewTagItem: .netStatus), for: .normal)
-            screenShoot.image = dataSource.imageFor(self, viewTagItem: .videoHolder)
-            setTitleImageForButton(shareButton, dataSource: dataSource)
-            setTitleImageForButton(alarmButton, dataSource: dataSource)
-            setTitleImageForButton(cloudStoreButton, dataSource: dataSource)
-            setTitleImageForButton(settingButton, dataSource: dataSource)
-            let collectionIsHiden = dataSource.isItemShouldHide(self, viewTagItem: .collection)
+            logo.setImage(dataSource.image(for: self, forTaged: .logo), for: .normal)
+            name.setTitle(dataSource.title(for: self, forTaged: .name), for: .normal)
+            networkStatus.setImage(dataSource.image(for: self, forTaged: .netStatus), for: .normal)
+            screenShoot.image = dataSource.image(for: self, forTaged: .videoHolder)
+            setTitleImageFor(shareButton, with: dataSource)
+            setTitleImageFor(alarmButton, with: dataSource)
+            setTitleImageFor(cloudStoreButton, with: dataSource)
+            setTitleImageFor(settingButton, with: dataSource)
+            let collectionIsHiden = dataSource.isHide(at: self, forTaged: .collection)
             collectionPresenter.collection.isHidden = collectionIsHiden
             collectionPresenter.collection.alpha = 0
             if !collectionIsHiden {
@@ -40,18 +61,18 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
                     }
                 }
             }
-            shareButton.isHidden = dataSource.isItemShouldHide(self, viewTagItem: .first)
-            collectionPresenter.collectionStatusLabel.isHidden = !dataSource.isBottomViewOpen || dataSource.subCellCounts > 0
-            collectionPresenter.collectionStatusLabel.text = dataSource.titleFor(self, viewTagItem: .collectionDataLoadingHolder)
+            shareButton.isHidden = dataSource.isHide(at: self, forTaged: .first)
+            collectionPresenter.collectionStatusLabel.isHidden = !dataSource.isBottomViewOpen || dataSource.numOfcollectionCell() > 0
+            collectionPresenter.collectionStatusLabel.text = dataSource.title(for: self, forTaged: .collectionDataLoadingHolder)
             collectionPresenter.collection.reloadData()
             setButtons()
         }
     }
     
     
-    private func setTitleImageForButton(_ button: UIButton, dataSource: MNCloudLiveCardCellDataSource) {
-        button.setTitle(dataSource.titleFor(self, viewTagItem: LiveCardItem(rawValue: button.tag)!), for: .normal)
-        button.setImage(dataSource.imageFor(self, viewTagItem: LiveCardItem(rawValue: button.tag)!), for: .normal)
+    private func setTitleImageFor(_ button: UIButton, with dataSource: MNCloudLiveCardCellDataSource) {
+        button.setTitle(dataSource.title(for: self, forTaged: LiveCardItem(rawValue: button.tag)!), for: .normal)
+        button.setImage(dataSource.image(for: self, forTaged: LiveCardItem(rawValue: button.tag)!), for: .normal)
     }
     
     // MARK: - self.subviews start -
