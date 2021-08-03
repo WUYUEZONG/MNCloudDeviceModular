@@ -73,7 +73,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }()
     
     lazy var topStack: UIStackView = {
-        let t = UIStackView(arrangedSubviews: [logo, name, networkStatus])
+        let t = UIStackView(arrangedSubviews: [logo, name, lockStatus, networkStatus])
         t.axis = .horizontal
         let h = t.heightAnchor.constraint(equalToConstant: topStackHeight)
         NSLayoutConstraint.activate([h])
@@ -102,15 +102,9 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     
     lazy var logo: UIButton = {
-        let d = UIButton(type: .custom)
-        d.imageView?.contentMode = .scaleAspectFit
-        d.tag = LiveCardItem.logo.rawValue
-        d.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-        d.translatesAutoresizingMaskIntoConstraints = false
-        let width = d.widthAnchor.constraint(equalToConstant: 50)
-        NSLayoutConstraint.activate([width])
-        return d
+        return topStackRightItem(.logo, with: 50)
     }()
+    
     lazy var name: UIButton = {
         let d = UIButton(type: .system)
         d.tag = LiveCardItem.name.rawValue
@@ -123,28 +117,20 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return d
     }()
     lazy var lockStatus: UIButton = {
-        let n = UIButton(type: .custom)
-        n.tag = LiveCardItem.lockStatus.rawValue
-        n.imageView?.contentMode = .scaleAspectFit
-        n.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-        n.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
-        n.translatesAutoresizingMaskIntoConstraints = false
-        let width = n.widthAnchor.constraint(equalToConstant: 36)
-        NSLayoutConstraint.activate([width])
-        return n
+        return topStackRightItem(.lockStatus)
     }()
     lazy var networkStatus: UIButton = {
         return topStackRightItem(.netStatus)
     }()
     
-    func topStackRightItem(_ tag: LiveCardItem) -> UIButton {
+    func topStackRightItem(_ tag: LiveCardItem, with width: CGFloat = 36) -> UIButton {
         let button = UIButton(type: .custom)
         button.tag = tag.rawValue
         button.imageView?.contentMode = .scaleAspectFit
         button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         button.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        let width = button.widthAnchor.constraint(equalToConstant: 36)
+        let width = button.widthAnchor.constraint(equalToConstant: width)
         NSLayoutConstraint.activate([width])
         return button
     }
