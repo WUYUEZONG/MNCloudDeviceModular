@@ -72,7 +72,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return stack
     }()
     
-    public lazy var topStack: UIStackView = {
+    lazy var topStack: UIStackView = {
         let t = UIStackView(arrangedSubviews: [logo, name, networkStatus])
         t.axis = .horizontal
         let h = t.heightAnchor.constraint(equalToConstant: topStackHeight)
@@ -80,7 +80,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return t
     }()
     
-    public lazy var screenShoot: UIImageView = {
+    lazy var screenShoot: UIImageView = {
         let s = UIImageView()
         s.tag = LiveCardItem.videoHolder.rawValue
         s.contentMode = .scaleAspectFill
@@ -90,7 +90,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return s
     }()
     
-    public lazy var bottomStack: UIStackView = {
+    lazy var bottomStack: UIStackView = {
         let b = UIStackView(arrangedSubviews: [shareButton, alarmButton, cloudStoreButton, settingButton])
         b.axis = .horizontal
         b.alignment = .fill
@@ -101,7 +101,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }()
     
     
-    public lazy var logo: UIButton = {
+    lazy var logo: UIButton = {
         let d = UIButton(type: .custom)
         d.imageView?.contentMode = .scaleAspectFit
         d.tag = LiveCardItem.logo.rawValue
@@ -111,7 +111,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         NSLayoutConstraint.activate([width])
         return d
     }()
-    public lazy var name: UIButton = {
+    lazy var name: UIButton = {
         let d = UIButton(type: .system)
         d.tag = LiveCardItem.name.rawValue
         d.titleLabel?.text = "name"
@@ -122,9 +122,9 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         d.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
         return d
     }()
-    public lazy var networkStatus: UIButton = {
+    lazy var lockStatus: UIButton = {
         let n = UIButton(type: .custom)
-        n.tag = LiveCardItem.netStatus.rawValue
+        n.tag = LiveCardItem.lockStatus.rawValue
         n.imageView?.contentMode = .scaleAspectFit
         n.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         n.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
@@ -133,17 +133,32 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         NSLayoutConstraint.activate([width])
         return n
     }()
+    lazy var networkStatus: UIButton = {
+        return topStackRightItem(.netStatus)
+    }()
     
-    public lazy var shareButton: UIButton = {
+    func topStackRightItem(_ tag: LiveCardItem) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.tag = tag.rawValue
+        button.imageView?.contentMode = .scaleAspectFit
+        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        button.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let width = button.widthAnchor.constraint(equalToConstant: 36)
+        NSLayoutConstraint.activate([width])
+        return button
+    }
+    
+    lazy var shareButton: UIButton = {
         return defaultFootButton(with: "Share", itemTag: .first)
     }()
-    public lazy var alarmButton: UIButton = {
+    lazy var alarmButton: UIButton = {
         return defaultFootButton(with: "Message", itemTag: .second)
     }()
-    public lazy var cloudStoreButton: UIButton = {
+    lazy var cloudStoreButton: UIButton = {
         return defaultFootButton(with: "Cloud", itemTag: .third)
     }()
-    public lazy var settingButton: UIButton = {
+    lazy var settingButton: UIButton = {
         return defaultFootButton(with: "Settings", itemTag: .fourth)
     }()
     

@@ -73,4 +73,6 @@ public enum LiveCardItem: Int {
     case collection = 108
     /// LiveCardCell's bottom-collection loadingHolder icon
     case collectionDataLoadingHolder = 109
+    /// LiveCardCell's top-right second icon
+    case lockStatus = 110
 }
