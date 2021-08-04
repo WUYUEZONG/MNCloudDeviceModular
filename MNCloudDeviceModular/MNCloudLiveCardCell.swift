@@ -45,6 +45,11 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
             collectionPresenter.collectionStatusLabel.text = dataSource.title(for: self, forTaged: .collectionDataLoadingHolder)
             collectionPresenter.collection.reloadData()
             setButtons()
+            
+            // Center Prensenter
+            centerPrensenter.titleLabel.text = dataSource.title(for: self, forTaged: .CPBottomTitle)
+            centerPrensenter.detailButton.setTitle(dataSource.title(for: self, forTaged: .CPBottomDetial), for: .normal)
+            centerPrensenter.closeButton.setImage(dataSource.image(for: self, forTaged: .CPBottomClose), for: .normal)
         }
     }
     
@@ -164,6 +169,13 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return button
     }
     
+    // MARK: - Center Presenter
+    
+    lazy var centerPrensenter: LiveCardCenterStatusPresenter = {
+        let presneter = LiveCardCenterStatusPresenter(cell: self)
+        return presneter
+    }()
+    
     // MARK: - self.subviews end : init views -
     
     public override init(frame: CGRect) {
@@ -215,7 +227,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     // MARK: - Delegate calls -
     
-    @objc private func itemsActions(sender: UIButton) {
+    @objc public func itemsActions(sender: UIButton) {
         let item = LiveCardItem(rawValue: sender.tag)
         delegate?.didSelect(cell: self, at: item, with: sender.tag)
     }
