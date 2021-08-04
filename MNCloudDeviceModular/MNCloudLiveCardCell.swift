@@ -23,6 +23,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
             logo.setImage(dataSource.image(for: self, forTaged: .logo), for: .normal)
             name.setTitle(dataSource.title(for: self, forTaged: .name), for: .normal)
             networkStatus.setImage(dataSource.image(for: self, forTaged: .netStatus), for: .normal)
+            lockStatus.setImage(dataSource.image(for: self, forTaged: .lockStatus), for: .normal)
             screenShoot.image = dataSource.image(for: self, forTaged: .videoHolder)
             setTitleImageFor(shareButton, with: dataSource)
             setTitleImageFor(alarmButton, with: dataSource)
@@ -73,7 +74,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     }()
     
     lazy var topStack: UIStackView = {
-        let t = UIStackView(arrangedSubviews: [logo, name, networkStatus])
+        let t = UIStackView(arrangedSubviews: [logo, name, lockStatus, networkStatus])
         t.axis = .horizontal
         let h = t.heightAnchor.constraint(equalToConstant: topStackHeight)
         NSLayoutConstraint.activate([h])
@@ -122,7 +123,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return topStackRightItem(.netStatus)
     }()
     
-    func topStackRightItem(_ tag: LiveCardItem, with width: CGFloat = 36) -> UIButton {
+    func topStackRightItem(_ tag: LiveCardItem, with width: CGFloat = 40) -> UIButton {
         let button = UIButton(type: .custom)
         button.tag = tag.rawValue
         button.imageView?.contentMode = .scaleAspectFit
