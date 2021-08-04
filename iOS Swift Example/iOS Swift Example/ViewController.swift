@@ -119,7 +119,7 @@ extension ViewController: MNCloudLiveCardCellDelegate {
     }
     
     
-    func didSelect(cell: MNCloudLiveCardCell, at item: LiveCardItem) {
+    func didSelect(cell: MNCloudLiveCardCell, at item: LiveCardItem?, with tag: Int) {
         switch item {
         case .second:
             
@@ -140,7 +140,7 @@ extension ViewController: MNCloudLiveCardCellDelegate {
             }
                 
         default:
-            debugPrint("\(item)")
+            debugPrint("\(String(describing: item))")
         }
     }
     

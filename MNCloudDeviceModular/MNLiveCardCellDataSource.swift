@@ -8,7 +8,17 @@
 import UIKit
 
 public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
-    func didSelect(cell: MNCloudLiveCardCell, at item: LiveCardItem)
+
+    /// the method will call when you did tap at any button of cell.
+    /// If you want custom add an item, please use the tag.
+    /// Once you custom a view, set tag at least from 111.
+    ///
+    /// - Parameters:
+    ///     - cell: `MNCloudLiveCardCell`
+    ///     - item: a kind of `LiveCardItem`
+    ///     - tag: the button tag, or your custom tag.
+    ///
+    func didSelect(cell: MNCloudLiveCardCell, at item: LiveCardItem?, with tag: Int)
     func didSelect(collectionView: UICollectionView, at indexPath: IndexPath)
 }
 
