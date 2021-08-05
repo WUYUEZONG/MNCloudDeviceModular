@@ -23,6 +23,7 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
             logo.setImage(dataSource.image(for: self, forTaged: .logo), for: .normal)
             name.setTitle(dataSource.title(for: self, forTaged: .name), for: .normal)
             networkStatus.setImage(dataSource.image(for: self, forTaged: .netStatus), for: .normal)
+            lockStatus.setImage(dataSource.image(for: self, forTaged: .lockStatus), for: .normal)
             screenShoot.image = dataSource.image(for: self, forTaged: .videoHolder)
             setTitleImageFor(shareButton, with: dataSource)
             setTitleImageFor(alarmButton, with: dataSource)
@@ -44,6 +45,11 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
             collectionPresenter.collectionStatusLabel.text = dataSource.title(for: self, forTaged: .collectionDataLoadingHolder)
             collectionPresenter.collection.reloadData()
             setButtons()
+            
+            // Center Prensenter
+            centerPrensenter.titleLabel.text = dataSource.title(for: self, forTaged: .CPBottomTitle)
+            centerPrensenter.detailButton.setTitle(dataSource.title(for: self, forTaged: .CPBottomDetial), for: .normal)
+            centerPrensenter.closeButton.setImage(dataSource.image(for: self, forTaged: .CPBottomClose), for: .normal)
         }
     }
     
