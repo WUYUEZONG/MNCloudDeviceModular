@@ -14,6 +14,8 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     // MARK: - public func -
     
     
+    
+    
     // MARK: - public var -
     
     public weak var delegate: MNCloudLiveCardCellDelegate?
