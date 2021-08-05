@@ -119,28 +119,28 @@ extension ViewController: MNCloudLiveCardCellDelegate {
     }
     
     
-    func didSelect(cell: MNCloudLiveCardCell, at item: LiveCardItem) {
+    func didSelect(cell: MNCloudLiveCardCell, at item: LiveCardItem?, with tag: Int) {
         switch item {
         case .second:
             
             guard let i = collection.indexPath(for: cell), i.row < data.count else { return }
             let model = data[i.row]
             model.isOpen = !model.isOpen
-            model.dataLoadingHolder = "loading..."
+            model.loadingHoldText = "loading..."
             collection.reloadItems(at: [i])
             
             guard model.isOpen && model.dataCount == 0 else { return }
             DispatchQueue.global().async {
                 sleep(2)
-                model.dataCount = 0
+                model.dataCount = 30
                 DispatchQueue.main.async {
-                    model.dataLoadingHolder = "no more data"
+                    model.loadingHoldText = "no more data"
                     self.collection.reloadItems(at: [i])
                 }
             }
                 
         default:
-            debugPrint("\(item)")
+            debugPrint("\(String(describing: item))")
         }
     }
     

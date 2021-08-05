@@ -123,7 +123,8 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         return topStackRightItem(.netStatus)
     }()
     
-    func topStackRightItem(_ tag: LiveCardItem, with width: CGFloat = 36) -> UIButton {
+    func topStackRightItem(_ tag: LiveCardItem, with width: CGFloat = 40) -> UIButton {
+
         let button = UIButton(type: .custom)
         button.tag = tag.rawValue
         button.imageView?.contentMode = .scaleAspectFit
@@ -163,6 +164,13 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(itemsActions(sender:)), for: .touchUpInside)
         return button
     }
+    
+    // MARK: - Center Presenter
+    
+    lazy var centerPrensenter: LiveCardCenterStatusPresenter = {
+        let presneter = LiveCardCenterStatusPresenter(cell: self)
+        return presneter
+    }()
     
     // MARK: - self.subviews end : init views -
     
@@ -215,9 +223,9 @@ public class MNCloudLiveCardCell: UICollectionViewCell {
     
     // MARK: - Delegate calls -
     
-    @objc private func itemsActions(sender: UIButton) {
-        let item = LiveCardItem(rawValue: sender.tag)!
-        delegate?.didSelect(cell: self, at: item)
+    @objc public func itemsActions(sender: UIButton) {
+        let item = LiveCardItem(rawValue: sender.tag)
+        delegate?.didSelect(cell: self, at: item, with: sender.tag)
     }
     
 

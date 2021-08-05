@@ -13,6 +13,7 @@
 		187EA6CB26A96EC500E648B8 /* MNCloudController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EA6C926A96EC500E648B8 /* MNCloudController.swift */; };
 		18A9B9A426A7CB3F006CBD5C /* MNCloudDeviceModular.h in Headers */ = {isa = PBXBuildFile; fileRef = 18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		619994F626A9C6C000D94110 /* MNCloudLiveCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619994F526A9C6C000D94110 /* MNCloudLiveCardCell.swift */; };
+		61BCE85526BAC744004D25F1 /* LiveCardCenterStatusPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BCE85426BAC744004D25F1 /* LiveCardCenterStatusPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		18A9B9A326A7CB3F006CBD5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		619994A126A98D1500D94110 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		619994F526A9C6C000D94110 /* MNCloudLiveCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNCloudLiveCardCell.swift; sourceTree = "<group>"; };
+		61BCE85426BAC744004D25F1 /* LiveCardCenterStatusPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCardCenterStatusPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				18A9B9A226A7CB3F006CBD5C /* MNCloudDeviceModular.h */,
 				187EA6C226A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift */,
 				619994F526A9C6C000D94110 /* MNCloudLiveCardCell.swift */,
+				61BCE85426BAC744004D25F1 /* LiveCardCenterStatusPresenter.swift */,
 				187617B226B10B0A001FE8AF /* MNLiveCardCellDataSource.swift */,
 				187EA6C426A966F800E648B8 /* SingleImageCollectionCell.swift */,
 				18A9B9A326A7CB3F006CBD5C /* Info.plist */,
@@ -160,6 +163,7 @@
 				187617B326B10B0A001FE8AF /* MNLiveCardCellDataSource.swift in Sources */,
 				619994F626A9C6C000D94110 /* MNCloudLiveCardCell.swift in Sources */,
 				187EA6CB26A96EC500E648B8 /* MNCloudController.swift in Sources */,
+				61BCE85526BAC744004D25F1 /* LiveCardCenterStatusPresenter.swift in Sources */,
 				187EA6C326A9632100E648B8 /* MNCloudLiveCardCellCollectionPresenter.swift in Sources */,
 				187EA6C626A966F800E648B8 /* SingleImageCollectionCell.swift in Sources */,
 			);

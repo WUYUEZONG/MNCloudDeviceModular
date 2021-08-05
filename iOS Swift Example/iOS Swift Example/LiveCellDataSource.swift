@@ -17,7 +17,7 @@ class LiveCellModel: NSObject {
     
     var model = TestModel()
     
-    var dataLoadingHolder = "data is loading..."
+    var loadingHoldText = "data is loading..."
     var isOpen = false
     var dataCount = 0
     
@@ -44,7 +44,7 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
         case .name:
             return model.name
         case .collectionDataLoadingHolder:
-            return dataLoadingHolder
+            return loadingHoldText
         case .first:
             return "share"
         case .second:
@@ -53,6 +53,10 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
             return model.is4G ? "4G" : "cloud"
         case .fourth:
             return "settings"
+        case .CPBottomTitle:
+            return "Up To Date"
+        case .CPBottomDetial:
+            return "Upgrade"
         default:
             return nil
         }
