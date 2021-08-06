@@ -21,6 +21,11 @@ class LiveCellModel: NSObject {
     var isOpen = false
     var dataCount = 0
     
+    var isChild = false
+    
+    var image = UIImage(named: "1")
+    var time = "00:00:00"
+    
     convenience init(model: TestModel) {
         self.init()
         self.model = model

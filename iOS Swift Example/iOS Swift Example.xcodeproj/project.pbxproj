@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		187617B526B11614001FE8AF /* LiveCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187617B426B11614001FE8AF /* LiveCellDataSource.swift */; };
+		188728C926BCC1D500045349 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188728C726BCC1D500045349 /* MessageCollectionViewCell.swift */; };
+		188728CA26BCC1D500045349 /* MessageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188728C826BCC1D500045349 /* MessageCollectionViewCell.xib */; };
+		188728CD26BCC45D00045349 /* MessageCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188728CC26BCC45D00045349 /* MessageCellDataSource.swift */; };
 		18A9B9E926A7D758006CBD5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9B9E826A7D758006CBD5C /* AppDelegate.swift */; };
 		18A9B9EB26A7D758006CBD5C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9B9EA26A7D758006CBD5C /* SceneDelegate.swift */; };
 		18A9B9ED26A7D758006CBD5C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9B9EC26A7D758006CBD5C /* ViewController.swift */; };
@@ -29,6 +32,9 @@
 /* Begin PBXFileReference section */
 		187617B426B11614001FE8AF /* LiveCellDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCellDataSource.swift; sourceTree = "<group>"; };
 		187EA6B126A8F67800E648B8 /* MNCloudDeviceModular.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MNCloudDeviceModular.xcodeproj; path = ../MNCloudDeviceModular.xcodeproj; sourceTree = "<group>"; };
+		188728C726BCC1D500045349 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
+		188728C826BCC1D500045349 /* MessageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCollectionViewCell.xib; sourceTree = "<group>"; };
+		188728CC26BCC45D00045349 /* MessageCellDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellDataSource.swift; sourceTree = "<group>"; };
 		18A9B9E526A7D758006CBD5C /* iOS Swift Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Swift Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18A9B9E826A7D758006CBD5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18A9B9EA26A7D758006CBD5C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +95,9 @@
 				18A9B9E826A7D758006CBD5C /* AppDelegate.swift */,
 				18A9B9EA26A7D758006CBD5C /* SceneDelegate.swift */,
 				18A9B9EC26A7D758006CBD5C /* ViewController.swift */,
+				188728CC26BCC45D00045349 /* MessageCellDataSource.swift */,
+				188728C726BCC1D500045349 /* MessageCollectionViewCell.swift */,
+				188728C826BCC1D500045349 /* MessageCollectionViewCell.xib */,
 				187617B426B11614001FE8AF /* LiveCellDataSource.swift */,
 				18A9B9EE26A7D758006CBD5C /* Main.storyboard */,
 				18A9B9F126A7D75B006CBD5C /* Assets.xcassets */,
@@ -173,6 +182,7 @@
 			files = (
 				18A9B9F526A7D75B006CBD5C /* LaunchScreen.storyboard in Resources */,
 				18A9B9F226A7D75B006CBD5C /* Assets.xcassets in Resources */,
+				188728CA26BCC1D500045349 /* MessageCollectionViewCell.xib in Resources */,
 				18A9B9F026A7D758006CBD5C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,7 +194,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188728CD26BCC45D00045349 /* MessageCellDataSource.swift in Sources */,
 				18A9B9ED26A7D758006CBD5C /* ViewController.swift in Sources */,
+				188728C926BCC1D500045349 /* MessageCollectionViewCell.swift in Sources */,
 				18A9B9E926A7D758006CBD5C /* AppDelegate.swift in Sources */,
 				187617B526B11614001FE8AF /* LiveCellDataSource.swift in Sources */,
 				18A9B9EB26A7D758006CBD5C /* SceneDelegate.swift in Sources */,

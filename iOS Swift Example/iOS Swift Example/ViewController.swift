@@ -10,9 +10,9 @@ import MNCloudDeviceModular
 
 class ViewController: UIViewController {
 
-    lazy var data: [LiveCellModel] = {
+    lazy var data: [[LiveCellModel]] = {
         
-        return [LiveCellModel(model: TestModel(name: "1", is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(name: "ZHji999999999ZHji999999999ZHji999999999", is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true))]
+        return [[LiveCellModel()], [LiveCellModel()], [LiveCellModel()], [LiveCellModel()]/*, LiveCellModel(model: TestModel(name: "ZHji999999999ZHji999999999ZHji999999999", is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true)), LiveCellModel(), LiveCellModel(), LiveCellModel(model: TestModel(is4G: true))*/]
     }()
     
     @IBOutlet weak var collection: UICollectionView! {
@@ -20,22 +20,28 @@ class ViewController: UIViewController {
             
             let l = UICollectionViewFlowLayout()
             l.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: 308)
-            l.minimumLineSpacing = 12
+            l.minimumLineSpacing = 4
             l.scrollDirection = .vertical
+            l.sectionInset.bottom = 10
             collection.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            
             collection.backgroundColor = .systemBlue
             collection.setCollectionViewLayout(l, animated: false)
             collection.register(MNCloudLiveCardCell.self, forCellWithReuseIdentifier: "MNCloudLiveCardCell")
+            collection.register(UINib(nibName: "MessageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MessageCollectionViewCell")
             collection.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressAction(_:))))
             
         }
     }
+    
+    var messageDataSource = MessageCellDataSource()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
+        
     }
     
     @objc func longPressAction(_ press: UILongPressGestureRecognizer) {
@@ -67,13 +73,25 @@ class ViewController: UIViewController {
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        data[section].count
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let model = data[indexPath.section][indexPath.row]
+        if model.isChild {
+            //MessageCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCollectionViewCell", for: indexPath) as! MessageCollectionViewCell
+            messageDataSource.cell = cell
+            print("has reload child")
+            return cell
+        }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MNCloudLiveCardCell", for: indexPath) as! MNCloudLiveCardCell
         cell.delegate = self
-        cell.dataSource = data[indexPath.row]
+        cell.dataSource = model
         return cell
     }
     
@@ -83,7 +101,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        debugPrint("sub count is \(data[indexPath.row].dataCount)")
+//        debugPrint("sub count is \(data[indexPath.row].dataCount)")
     }
     
 }
@@ -98,16 +116,20 @@ extension ViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let sourceData = data[sourceIndexPath.row]
-        data.remove(at: sourceIndexPath.row)
-        data.insert(sourceData, at: destinationIndexPath.row)
+        let sourceData = data[sourceIndexPath.section]
+        data.remove(at: sourceIndexPath.section)
+        data.insert(sourceData, at: destinationIndexPath.section)
     }
     
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return data[indexPath.row].liveCardSize(width: UIScreen.main.bounds.width - 20)
+        let model = data[indexPath.section][indexPath.row]
+        if model.isChild {
+            return CGSize(width: UIScreen.main.bounds.width - 20, height: 80)
+        }
+        return model.liveCardSize(width: UIScreen.main.bounds.width - 20)
     }
 }
 
@@ -123,21 +145,11 @@ extension ViewController: MNCloudLiveCardCellDelegate {
         switch item {
         case .second:
             
-            guard let i = collection.indexPath(for: cell), i.row < data.count else { return }
-            let model = data[i.row]
-            model.isOpen = !model.isOpen
-            model.loadingHoldText = "loading..."
-            collection.reloadItems(at: [i])
+            guard let i = collection.indexPath(for: cell) else { return }
+//            messageDataSource.controlData = data
+            messageDataSource.showOrHide(collection: collection, cellAt: i, control: &data)
             
-            guard model.isOpen && model.dataCount == 0 else { return }
-            DispatchQueue.global().async {
-                sleep(2)
-                model.dataCount = 30
-                DispatchQueue.main.async {
-                    model.loadingHoldText = "no more data"
-                    self.collection.reloadItems(at: [i])
-                }
-            }
+
                 
         default:
             debugPrint("\(String(describing: item))")

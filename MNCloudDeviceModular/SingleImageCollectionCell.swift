@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SingleImageCollectionCell: UICollectionViewCell {
+public class SingleImageCollectionCell: UICollectionViewCell {
     
     public lazy var backgroundImage: UIImageView = {
         let bImg = UIImageView()
@@ -41,7 +41,7 @@ class SingleImageCollectionCell: UICollectionViewCell {
         return r
     }()
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         contentView.backgroundColor = .white
         
