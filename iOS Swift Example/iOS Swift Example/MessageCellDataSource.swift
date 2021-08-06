@@ -16,6 +16,11 @@ class MessageCellDataSource: NSObject {
         tempData.isChild = true
     }
     
+    var dataUpToDate: (([LiveCellModel])->())?
+    var controlData: [LiveCellModel]!
+    
+    private var cachedData: [String: [LiveCellModel]] = [:]
+    
     var tempData = LiveCellModel()
     var tempIndexPath: IndexPath?
     
@@ -24,48 +29,66 @@ class MessageCellDataSource: NSObject {
     var cell: MessageCollectionViewCell? {
         didSet {
             cell?.collection.dataSource = self
-            cell?.collection.isHidden = true
+            //cell?.collection.isHidden = true
         }
     }
     
     
-    func loadData(complete:@escaping ()->()) {
+    
+    func loadData(model: LiveCellModel) {
         cell?.holderTextLabel.text = "Loading..."
         cell?.holderTextLabel.isHidden = false
+        if let data = cachedData[model.model.sn], !data.isEmpty {
+            self.datas = data
+            self.setViewsStatusAfterDataLoaded()
+            return
+        }
         
         DispatchQueue.global().async {
             sleep(2)
             self.datas = [LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel(), LiveCellModel()]
+            self.cachedData[model.model.sn] = self.datas
             DispatchQueue.main.async {
-                complete()
-                self.cell?.holderTextLabel.text = "No More Data"
-                self.cell?.collection.isHidden = self.datas.isEmpty
-                self.cell?.holderTextLabel.isHidden = !self.datas.isEmpty
-                self.cell?.collection.reloadData()
+                self.setViewsStatusAfterDataLoaded()
             }
         }
     }
     
-    
-    func showOrHide(collection: UICollectionView, cellAt indexPath: IndexPath, control data: inout [[LiveCellModel]]) {
-        
-        let insertIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
-        guard let tempIndexPath = tempIndexPath else {
-            return self.collection(collection, control: &data, insertAtRow: insertIndexPath)
-        }
-        guard tempIndexPath.section != indexPath.section else {
-            return self.collection(collection, control: &data, deleteAt: tempIndexPath)
-        }
-        self.collection(collection, control: &data, deleteAt: tempIndexPath, withInsert: indexPath)
+    func setViewsStatusAfterDataLoaded() {
+        self.cell?.holderTextLabel.text = "No More Data"
+        self.cell?.collection.isHidden = self.datas.isEmpty
+        self.cell?.holderTextLabel.isHidden = !self.datas.isEmpty
+        self.cell?.collection.reloadData()
     }
     
-    func collection(_ collection: UICollectionView, control data: inout [[LiveCellModel]], deleteAt tempIndexPath: IndexPath, withInsert indexPath: IndexPath? = nil) {
+    func resetDefaultStatus(collection: UICollectionView) {
+        guard let tempIndexPath = tempIndexPath else { return }
+        self.collection(collection, deleteAt: tempIndexPath)
+    }
+    
+    
+    func showOrHide(collection: UICollectionView, cellAt indexPath: IndexPath, control data: [LiveCellModel]) {
+        self.controlData = data
+        var insertIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+        guard let tempIndexPath = tempIndexPath else {
+            return self.collection(collection, insertAtRow: insertIndexPath)
+        }
+        guard tempIndexPath.row != indexPath.row + 1 else {
+            return self.collection(collection, deleteAt: tempIndexPath)
+        }
+        let row = indexPath.row < tempIndexPath.row ? indexPath.row + 1 : indexPath.row
+        insertIndexPath = IndexPath(row: row, section: indexPath.section)
+        self.collection(collection, deleteAt: tempIndexPath, withInsert: insertIndexPath)
+    }
+    
+    func collection(_ collection: UICollectionView, deleteAt tempIndexPath: IndexPath, withInsert indexPath: IndexPath? = nil) {
+        controlData.remove(at: tempIndexPath.row)
+        dataUpToDate!(self.controlData)
         collection.performBatchUpdates {
-            data[tempIndexPath.section].removeLast()
             collection.deleteItems(at: [tempIndexPath])
         } completion: { f in
             if let indexPath = indexPath {
-                self.collection(collection, control: &data, insertAtRow: indexPath)
+                self.collection(collection, insertAtRow: indexPath)
             } else {
                 self.tempIndexPath = nil
             }
@@ -73,18 +96,20 @@ class MessageCellDataSource: NSObject {
     }
     
     
-    func collection(_ collection: UICollectionView, control data: inout [[LiveCellModel]], insertAtRow indexPath: IndexPath) {
+    func collection(_ collection: UICollectionView, insertAtRow indexPath: IndexPath) {
         
+        self.controlData.insert(self.tempData, at: indexPath.row)
+        self.dataUpToDate!(self.controlData)
+        self.tempIndexPath = indexPath
         collection.performBatchUpdates {
-            var sectionData = data[indexPath.section]
-            sectionData.append(self.tempData)
-            data[indexPath.section] = sectionData
-            self.tempIndexPath = indexPath
             collection.insertItems(at: [indexPath])
         } completion: { f in
-            collection.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-            self.loadData {
+            if let last = collection.visibleCells.last,
+               let lastIndexPath = collection.indexPath(for: last),
+               lastIndexPath.row <= indexPath.row {
+                collection.scrollToItem(at: indexPath, at: .bottom, animated: true)
             }
+            self.loadData(model: self.controlData[indexPath.row - 1])
         }
         
     }

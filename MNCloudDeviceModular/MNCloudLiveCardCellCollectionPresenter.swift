@@ -62,14 +62,14 @@ extension MNCloudLiveCardCellCollectionPresenter: UICollectionViewDataSource {
         guard let dataSource = cell.dataSource else {
             return 0
         }
-        debugPrint("collection count is \(dataSource.numOfcollectionCell())")
-        return dataSource.numOfcollectionCell()
+//        debugPrint("collection count is \(dataSource.numOfcollectionCell())")
+        return 0//dataSource.numOfcollectionCell()
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCollectionCell", for: indexPath) as! SingleImageCollectionCell
-        cell.backgroundImage.image = self.cell.dataSource?.image(for: collectionView, cellAt: indexPath)
-        cell.recordingTime.text = self.cell.dataSource?.time(for: collectionView, cellAt: indexPath)
+//        cell.backgroundImage.image = self.cell.dataSource?.image(for: collectionView, cellAt: indexPath)
+//        cell.recordingTime.text = self.cell.dataSource?.time(for: collectionView, cellAt: indexPath)
         return cell
     }
     

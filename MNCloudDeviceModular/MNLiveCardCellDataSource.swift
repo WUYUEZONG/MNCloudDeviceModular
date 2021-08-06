@@ -25,12 +25,12 @@ public protocol MNCloudLiveCardCellDelegate: NSObjectProtocol {
 public protocol MNCloudLiveCardCellDataSource: NSObjectProtocol {
    
 
-    var isBottomViewOpen: Bool { get }
+//    var isBottomViewOpen: Bool { get }
     
     func liveCardSize(width: CGFloat) -> CGSize
     
     /// number of cell for bottom collection
-    func numOfcollectionCell() -> Int
+//    func numOfcollectionCell() -> Int
     /**
      Hidden control of `LiveCardItem`
      - Parameters:
@@ -52,13 +52,13 @@ public protocol MNCloudLiveCardCellDataSource: NSObjectProtocol {
         - item: view of `MNCloudLiveCardCell` taged by `LiveCardItem`
      */
     func image(for cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> UIImage?
-    func time(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> String
-    func image(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> UIImage?
+//    func time(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> String
+//    func image(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> UIImage?
 }
 
 extension MNCloudLiveCardCellDataSource {
     public func liveCardSize(width: CGFloat) -> CGSize {
-        return isBottomViewOpen ? CGSize(width: width, height: 388) : CGSize(width: width, height: 308)
+        return CGSize(width: width, height: 316)
     }
 }
 

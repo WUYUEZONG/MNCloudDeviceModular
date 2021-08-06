@@ -11,6 +11,7 @@ import MNCloudDeviceModular
 struct TestModel {
     var name = "this is a device name"
     var is4G = false
+    var sn = "1312313"
 }
 
 class LiveCellModel: NSObject {
@@ -18,8 +19,7 @@ class LiveCellModel: NSObject {
     var model = TestModel()
     
     var loadingHoldText = "data is loading..."
-    var isOpen = false
-    var dataCount = 0
+    
     
     var isChild = false
     
@@ -35,12 +35,7 @@ class LiveCellModel: NSObject {
 extension LiveCellModel: MNCloudLiveCardCellDataSource {
     
     func isHide(at cell: MNCloudLiveCardCell, forTaged item: LiveCardItem) -> Bool {
-        switch item {
-        case .collection:
-            return isOpen ? dataCount == 0 : true
-        default:
-            return false
-        }
+        return false
     }
     
     
@@ -77,21 +72,6 @@ extension LiveCellModel: MNCloudLiveCardCellDataSource {
     }
     
     
-    var isBottomViewOpen: Bool {
-        isOpen
-    }
-    
     // MARK: - sub datas -
     
-    func numOfcollectionCell() -> Int {
-        dataCount
-    }
-    
-    func time(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> String {
-        "00:00:00"
-    }
-    
-    func image(for collectionView: UICollectionView, cellAt indexPath: IndexPath) -> UIImage? {
-        UIImage(named: "1")
-    }
 }
